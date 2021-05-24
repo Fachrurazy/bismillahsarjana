@@ -15,13 +15,32 @@
             <thead>
                 <tr>
                     <th>tujuan</th>
-                    <th>Nama</th>
-                    <th>Kategori</th>
-                    <th>Sub Golongan</th>
-                    <th>QTY</th>
-                    <th>#</th>
+                    <th>Jarak</th>
+                    <th>Estimasi Waktu</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach ($datas as $koordinat)
+                    <tr>
+                        <td>{{ $koordinat['id'] }}</td>
+                        <td>{{ $koordinat['nama_koordinat'] }}</td>
+                        <td>{{ $koordinat['lat'] }}</td>
+                        <td>{{ $koordinat['long'] }}</td>
+                        <td>
+                            <a type="button" class="btn btn-warning"
+                                href="{{ route('maps.show', $koordinat->id) }}">Show</a>
+                            <form method="POST" action="{{ route('maps.destroy', $koordinat->id) }}"
+                                class="pull-left">
+                                {{ csrf_field() }}
+                                {{ method_field('delete') }}
+                                <button class="btn btn-danger"
+                                    onclick="return confirm('Data ingin dihapus?')">HAPUS
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
             <tbody class="barang-ajax">
             </tbody>
         </table>
@@ -42,7 +61,7 @@
         }
 
     </style>
-    <script>
+    {{-- <script>
         // Initialize and add the map
         let map;
 
@@ -109,7 +128,7 @@
             }
         }
 
-    </script>
+    </script> --}}
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt_cq6yHgOOa8aUgC5_owypFYl32wSWjk&callback=initMap">
     </script>

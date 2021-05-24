@@ -36,7 +36,18 @@ class DistanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'nama_koordinat' => 'required',
+            'lat' => 'required',
+            'long' => 'required',
+        ]);
+
+        Maps::create([
+            'nama_koordinat' => $request->get('nama_koordinat'),
+            'lat' => $request->get('lat'),
+            'long' => $request->get('long'),
+        ]);
+        return redirect('/maps')->with('success','Data berhasil ditambahkan');
     }
 
     /**

@@ -23,9 +23,9 @@
                 <div id="map"></div>
             </div>
         </div>
-    
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <div class="form-group">
+
+        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+        {{-- <div class="form-group">
         <div class="col-md-12">
             <div class="card-body">
                 <form method="post" action="{{ route('maps.store') }}">
@@ -38,9 +38,32 @@
                 </form>
             </div>
         </div>
+    </div> --}}
+        <br>
+        <div class="col-12">
+            <div class="card">
+                <div class="row">
+                    <form action="http://127.0.0.1:8000/api/distance" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <div class="card-body">
+                                    <label for="exampleInputEmail1">ORIGIN</label><br>
+                                    <input type="text" name="origin" id="origin" autocomplete="on" runat="server" />
+                                    <label for="exampleInputEmail1">DESTINATION 1</label><br>
+                                    <input type="text" name="destination" id="destination" autocomplete="on" runat="server" />
+                                    <label for="exampleInputEmail1">DESTINATION 2</label>
+                                    <input type="text" name="destination1" id="destination1" autocomplete="on" runat="server" />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-    
+
 @stop
 
 @section('css')
@@ -82,20 +105,50 @@
 
     </script>
     <script type="text/javascript">
-        var searchInput = 'searchTextField';
+        var origin = 'origin';
         $(document).ready(function() {
-            var autocomplete;
-            autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
+            var autocompleteorigin;
+            autocompleteorigin = new google.maps.places.Autocomplete((document.getElementById(origin)), {
                 // types: ['geocode'],
                 componentRestrictions: {
                     country: "ID"
                 }
             });
 
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
-                var near_place = autocomplete.getPlace();
-                document.getElementById('cityLat').value = near_place.geometry.location.lat();
-                document.getElementById('cityLng').value = near_place.geometry.location.lng();
+            google.maps.event.addListener(autocompleteorigin, 'place_changed', function() {
+                var near_origin = autocompleteorigin.getPlace();
+                // document.getElementById('cityLat').value = near_place.geometry.location.lat();
+                // document.getElementById('cityLng').value = near_place.geometry.location.lng();
+            });
+
+        });
+        var destination = 'destination';
+        $(document).ready(function() {
+            var autocompletedestination;
+            autocompletedestination = new google.maps.places.Autocomplete((document.getElementById(destination)), {
+                // types: ['geocode'],
+                componentRestrictions: {
+                    country: "ID"
+                }
+            });
+
+            google.maps.event.addListener(autocompletedestination, 'place_changed', function() {
+                var near_destination = autocompletedestination.getPlace();
+            });
+        });
+        var destination1 = 'destination1';
+        $(document).ready(function() {
+            var autocompletedestination1;
+            autocompletedestination1 = new google.maps.places.Autocomplete((document.getElementById(
+                destination1)), {
+                // types: ['geocode'],
+                componentRestrictions: {
+                    country: "ID"
+                }
+            });
+
+            google.maps.event.addListener(autocompletedestination1, 'place_changed', function() {
+                var near_destination = autocompletedestination1.getPlace();
             });
         });
 
