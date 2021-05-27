@@ -236,6 +236,11 @@ return [
         ],
         ['header' => ''],
         [
+            'text' => 'Data Cabang',
+            'url'  => 'cabang',
+            'icon' => 'fas fa-fw fa-rocket',
+        ],
+        [
             'text' => 'Google Maps',
             'url'  => 'maps',
             'icon' => 'fas fa-fw fa-map',
@@ -326,21 +331,21 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],

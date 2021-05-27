@@ -49,11 +49,14 @@
                             <div class="col-md-4">
                                 <div class="card-body">
                                     <label for="exampleInputEmail1">ORIGIN</label><br>
-                                    <input type="text" name="origin" id="origin" autocomplete="on" runat="server" />
+                                    <input type="text" name="origin" id="origin"/>
                                     <label for="exampleInputEmail1">DESTINATION 1</label><br>
                                     <input type="text" name="destination" id="destination" autocomplete="on" runat="server" />
                                     <label for="exampleInputEmail1">DESTINATION 2</label>
                                     <input type="text" name="destination1" id="destination1" autocomplete="on" runat="server" />
+                                    {{-- <div id="inputcontainer">
+                                        <input type="text" name="input0" id="input0" onkeyup="addInput();" />
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -63,6 +66,32 @@
             </div>
         </div>
     </div>
+
+    {{-- <script>
+        var currentindex = 0;
+        function addInput(){
+            var lastinput = document.getElementById('input'+currentindex);
+            if(lastinput.value != ''){
+                var container = document.getElementById('inputcontainer');
+                var newinput = document.createElement('input');
+                currentindex++;
+                newinput.type = "text";
+                newinput.name = 'input'+currentindex;
+                newinput.id = 'input'+currentindex;
+                autocomplete = new google.maps.places.Autocomplete((document.getElementById(newinput.id)), {
+                    componentRestrictions: {
+                        country: "ID"
+                    }
+                });
+                google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                    var near_place = autocomplete.getPlace();
+                });
+                newinput.onkeyup = addInput;
+                container.appendChild(newinput);
+            }
+        }
+
+    </script> --}}
 
 @stop
 

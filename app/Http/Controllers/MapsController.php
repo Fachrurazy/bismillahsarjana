@@ -26,6 +26,7 @@ class MapsController extends Controller
      */
     public function create()
     {
+        // $datas = Maps::all();
         return view('maps.create');
     }
 

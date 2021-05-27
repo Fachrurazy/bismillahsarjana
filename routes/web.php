@@ -26,3 +26,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/maps', 'MapsController');
 Route::resource('/distance', 'DistanceController');
+Route::resource('/cabang', 'CabangController');
+// Route::post('cabang/update', 'CabangController@update');
