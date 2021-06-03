@@ -19,6 +19,9 @@
             </div>
             <div class="box-body">
                 <h3>Google Maps</h3>
+                <div id="floating-panel">
+                    <input onclick="removeLine();" type="button" value="Remove line" />
+                  </div>
                 <!--The div element for the map -->
                 <div id="map"></div>
             </div>
@@ -76,6 +79,10 @@ function addLatLng(event) {
     title: "#" + path.getLength(),
     map: map,
   });
+}
+
+function removeLine() {
+  poly.setMap(null);
 }
 
     </script>
