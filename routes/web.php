@@ -27,4 +27,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/maps', 'MapsController');
 Route::resource('/distance', 'DistanceController');
 Route::resource('/cabang', 'CabangController');
+Route::get('/polyline', 'MapsController@polyline')->name('polyline');
 // Route::post('cabang/update', 'CabangController@update');

@@ -36,8 +36,10 @@ class DistanceController extends Controller
                 'duration_value' => $getdurationval,
             ];
 
-            $dataCreate = Estimation::create($res);
-            $response_data_res = $dataCreate;
+            // $dataCreate = Estimation::create($res);
+            // $response_data_res = $dataCreate;
+            $estimate = 'Jarak dari '.$request->origin.' ke '.$request->destination.' adalah '.$getdistance;
+            // echo $estimate;die();
         } elseif ($request->destination2 == "") {
             $gmaps = $this->distance($request->origin, $request->destination);
             $gmaps1 = $this->distance($request->destination, $request->destination1);
@@ -73,6 +75,7 @@ class DistanceController extends Controller
             $dataCreate = Estimation::create($res);
             $dataCreate1 = Estimation::create($res1);
             
+
             $response_data_res = [
                 $dataCreate,
                 $dataCreate1
@@ -106,7 +109,7 @@ class DistanceController extends Controller
         //     'duration' => $getduration,
         //     'duration_value' => $getdurationval,
         // ]);
-        return response($response_data_res);
+        return redirect('/cabang')->with('success','Data berhasil ditambahkan');
     }
 
 
