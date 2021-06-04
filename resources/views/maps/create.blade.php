@@ -23,22 +23,6 @@
                 <div id="map"></div>
             </div>
         </div>
-
-        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-        {{-- <div class="form-group">
-        <div class="col-md-12">
-            <div class="card-body">
-                <form method="post" action="{{ route('maps.store') }}">
-                    {{ csrf_field() }}
-                    <input id="searchTextField" name="nama_koordinat" type="text" size="50" placeholder="Enter a location"
-                        autocomplete="on" runat="server" />
-                    <input type="text" id="cityLat" name="lat" />
-                    <input type="text" id="cityLng" name="long" />
-                    <button type="submit">Simpan</button>
-                </form>
-            </div>
-        </div>
-    </div> --}}
         <br>
         <div class="col-12">
             <div class="card">
