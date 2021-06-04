@@ -30,21 +30,22 @@
                     <form action="http://127.0.0.1:8000/api/distance" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <div class="col-md-4">
+                            <div class="col-md">
                                 <div class="card-body">
                                     <label for="exampleInputEmail1">ORIGIN</label><br>
-                                    <input type="text" name="origin" id="origin"/>
+                                    <input type="text" name="origin" id="origin" class="form-control" value="{{$datas['Alamat']}}" readonly/>
                                     <label for="exampleInputEmail1">DESTINATION 1</label><br>
-                                    <input type="text" name="destination" id="destination" autocomplete="on" runat="server" />
+                                    <input type="text" name="destination" class="form-control" id="destination" autocomplete="on" runat="server" />
                                     <label for="exampleInputEmail1">DESTINATION 2</label>
-                                    <input type="text" name="destination1" id="destination1" autocomplete="on" runat="server" />
+                                    <input type="text" name="destination1" class="form-control" id="destination1" autocomplete="on" runat="server" />
                                     {{-- <div id="inputcontainer">
                                         <input type="text" name="input0" id="input0" onkeyup="addInput();" />
-                                    </div> --}}
+                                    </div> --}}<br>
+                                    <button class="btn-success" type="submit">Simpan</button>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit">Simpan</button>
+                        
                     </form>
                 </div>
             </div>

@@ -23,9 +23,10 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nama Koordinat</th>
-                                    <th>Latitude</th>
-                                    <th>Longitude</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Distance</th>
+                                    <th>Duration</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -33,9 +34,10 @@
                                 @foreach ($datas as $koordinat)
                                     <tr>
                                         <td>{{ $koordinat['id'] }}</td>
-                                        <td>{{ $koordinat['nama_koordinat'] }}</td>
-                                        <td>{{ $koordinat['lat'] }}</td>
-                                        <td>{{ $koordinat['long'] }}</td>
+                                        <td>{{ $koordinat['origin'] }}</td>
+                                        <td>{{ $koordinat['destination'] }}</td>
+                                        <td>{{ $koordinat['distance'] }}</td>
+                                        <td>{{ $koordinat['duration'] }}</td>
                                         <td>
                                             <a type="button" class="btn btn-warning"
                                                 href="{{ route('maps.show', $koordinat->id) }}">Show</a>

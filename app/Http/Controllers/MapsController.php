@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Maps;
+use App\Estimation;
+use App\Cabang;
 
 class MapsController extends Controller
 {
@@ -15,7 +17,7 @@ class MapsController extends Controller
      */
     public function index()
     {
-        $datas = Maps::all();
+        $datas = Estimation::all();
         return view('maps.index', ['datas' => $datas]);
     }
 
@@ -26,8 +28,8 @@ class MapsController extends Controller
      */
     public function create()
     {
-        // $datas = Maps::all();
-        return view('maps.create');
+        $datas = Cabang::where('id', 1)->first();
+        return view('maps.create', compact('datas'));
     }
 
     /**
@@ -64,7 +66,8 @@ class MapsController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Estimation::findOrFail($id);
+        return view('maps.polyline', compact('data'));
     }
 
     public function polyline()
