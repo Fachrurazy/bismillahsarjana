@@ -72,6 +72,11 @@ class MapsController extends Controller
         return view('maps.polyline');
     }
 
+    public function polyline1()
+    {
+        return view('maps.polyline1');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

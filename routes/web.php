@@ -28,4 +28,5 @@ Route::resource('/maps', 'MapsController');
 Route::resource('/distance', 'DistanceController');
 Route::resource('/cabang', 'CabangController');
 Route::get('/polyline', 'MapsController@polyline')->name('polyline');
+Route::get('/polyline1', 'MapsController@polyline1')->name('polyline1');
 // Route::post('cabang/update', 'CabangController@update');
