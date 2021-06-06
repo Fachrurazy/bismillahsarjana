@@ -27,13 +27,13 @@
                                 <input  name="username" required="" type="hidden"/></div>
             
                             <div class="form-group"><label>origin: </label>
-                                <input class="form-control" id="from_places" placeholder="enter location" value="{{$data['origin']}}"/>
+                                <input class="form-control" id="from_places" placeholder="enter location"/>
                                 <input id="origin" name="origin" required="" type="hidden" value=""/>
                                 <a class="form-control" onclick="getCurrentPosition()">Set Current Location</a>
                             </div>
             
                             <div class="form-group"><label>destination</label>
-                                <input class="form-control" id="to_places" placeholder="enter location" value="{{$data['destination']}}"/>
+                                <input class="form-control" id="to_places" placeholder="enter location"/>
                                 <input id="destination" name="destination" required="" type="hidden"/></div>
             
                             <div class="form-group">

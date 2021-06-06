@@ -7,6 +7,7 @@ use PhpParser\Node\Stmt\TryCatch;
 use App\Maps;
 use App\Estimation;
 use App\Cabang;
+use App\Route;
 
 class MapsController extends Controller
 {
@@ -43,19 +44,33 @@ class MapsController extends Controller
         // $nama_koordinat = $request->nama_koordinat;
         // $lat = $request->lat;
         // $long = $request->long;
+        print_r($_POST);die;
 
-        $this->validate($request,[
-            'nama_koordinat' => 'required',
-            'lat' => 'required',
-            'long' => 'required',
-        ]);
+        $route = new Route();
+        $route->origin = $request->origin;
+        $route->origin_lat = $request->cityLat;
+        $route->origin_long = $request->cityLng;
+        $route->first_destination = $request->destination;
+        $route->first_destination_lat = $request->cityLat1;
+        $route->first_destination_long = $request->cityLng1;
+        $route->last_destination = $request->destination1;
+        $route->last_destination_lat = $request->cityLat2;
+        $route->last_destination_long = $request->cityLng2;
+        $route->save();
+        return redirect('/maps/index')->with('success','Data berhasil ditambahkan');
 
-        Maps::create([
-            'nama_koordinat' => $request->get('nama_koordinat'),
-            'lat' => $request->get('lat'),
-            'long' => $request->get('long'),
-        ]);
-        return redirect('/maps')->with('success','Data berhasil ditambahkan');
+        // $this->validate($request,[
+        //     'nama_koordinat' => 'required',
+        //     'lat' => 'required',
+        //     'long' => 'required',
+        // ]);
+
+        // Maps::create([
+        //     'nama_koordinat' => $request->get('nama_koordinat'),
+        //     'lat' => $request->get('lat'),
+        //     'long' => $request->get('long'),
+        // ]);
+        // return redirect('/maps')->with('success','Data berhasil ditambahkan');
     }
 
     /**
@@ -75,6 +90,7 @@ class MapsController extends Controller
         return view('maps.polyline');
     }
 
+    
     public function polyline1()
     {
         return view('maps.polyline1');

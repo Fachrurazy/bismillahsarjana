@@ -27,25 +27,80 @@
         <div class="col-12">
             <div class="card">
                 <div class="row">
-                    <form action="http://127.0.0.1:8000/api/distance" method="post">
+                    <form action="{{ route('maps.store') }}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <div class="col-md">
-                                <div class="card-body">
-                                    <label for="exampleInputEmail1">ORIGIN</label><br>
-                                    <input type="text" name="origin" id="origin" class="form-control" value="{{$datas['Alamat']}}" readonly/>
-                                    <label for="exampleInputEmail1">DESTINATION 1</label><br>
-                                    <input type="text" name="destination" class="form-control" id="destination" autocomplete="on" runat="server" />
+                            <div class="card-body" style="width: 100%">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">ORIGIN</label><br>
+                                        <input type="text" name="origin" id="origin" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Latitude</label><br>
+                                        <input type="text" id="cityLat" name="cityLat" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Longitute</label><br>
+                                        <input type="text" id="cityLng" name="cityLng" />
+                                    </div>
+                                    {{-- <div class="col-md-4">
+                                        <label for="exampleInputEmail1">ORIGIN</label><br>
+                                        <input type="text" name="origin" id="origin" class="form-control"
+                                            value="{{ $datas['Alamat'] }}" readonly />
+                                    </div> --}}
+                                    {{-- <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Latitude</label><br>
+                                        <input type="text" id="cityLat" name="cityLat" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Longitute</label><br>
+                                        <input type="text" id="cityLng" name="cityLng" />
+                                    </div> --}}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">DESTINATION 1</label><br>
+                                        <input type="text" name="destination" class="form-control" id="destination"
+                                            autocomplete="on"/>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Latitude</label><br>
+                                        <input type="text" id="cityLat1" name="cityLat1" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Longitute</label><br>
+                                        <input type="text" id="cityLng1" name="cityLng1" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
                                     <label for="exampleInputEmail1">DESTINATION 2</label>
-                                    <input type="text" name="destination1" class="form-control" id="destination1" autocomplete="on" runat="server" />
-                                    {{-- <div id="inputcontainer">
+                                    <input type="text" name="destination1" class="form-control" id="destination1"
+                                        autocomplete="on" runat="server" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Latitude</label><br>
+                                        <input type="text" id="cityLat2" name="cityLat2" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputEmail1">Longitute</label><br>
+                                        <input type="text" id="cityLng2" name="cityLng2" />
+                                    </div>
+                                </div>
+
+
+                                {{-- <label for="exampleInputEmail1">Latitude</label><br>
+                                <input type="text" id="cityLat1" name="cityLat1" />
+                                <label for="exampleInputEmail1">Longitute</label><br>
+                                <input type="text" id="cityLng1" name="cityLng1" /> --}}
+                                {{-- <div id="inputcontainer">
                                         <input type="text" name="input0" id="input0" onkeyup="addInput();" />
                                     </div> --}}<br>
-                                    <button class="btn-success" type="submit">Simpan</button>
-                                </div>
+                                <button class="btn-success" type="submit">Simpan</button>
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>
@@ -130,12 +185,14 @@
             });
 
             google.maps.event.addListener(autocompleteorigin, 'place_changed', function() {
-                var near_origin = autocompleteorigin.getPlace();
-                // document.getElementById('cityLat').value = near_place.geometry.location.lat();
-                // document.getElementById('cityLng').value = near_place.geometry.location.lng();
+                var near_place = autocompleteorigin.getPlace();
+                document.getElementById('cityLat').value = near_place.geometry.location.lat();
+                document.getElementById('cityLng').value = near_place.geometry.location.lng();
             });
 
         });
+
+       
         var destination = 'destination';
         $(document).ready(function() {
             var autocompletedestination;
@@ -147,14 +204,18 @@
             });
 
             google.maps.event.addListener(autocompletedestination, 'place_changed', function() {
-                var near_destination = autocompletedestination.getPlace();
+                var near_place = autocompletedestination.getPlace();
+                document.getElementById('cityLat1').value = near_place.geometry.location.lat();
+                document.getElementById('cityLng1').value = near_place.geometry.location.lng();
+                
             });
+
         });
+    
         var destination1 = 'destination1';
         $(document).ready(function() {
             var autocompletedestination1;
-            autocompletedestination1 = new google.maps.places.Autocomplete((document.getElementById(
-                destination1)), {
+            autocompletedestination1 = new google.maps.places.Autocomplete((document.getElementById(destination1)), {
                 // types: ['geocode'],
                 componentRestrictions: {
                     country: "ID"
@@ -162,9 +223,54 @@
             });
 
             google.maps.event.addListener(autocompletedestination1, 'place_changed', function() {
-                var near_destination = autocompletedestination1.getPlace();
+                var near_place = autocompletedestination1.getPlace();
+                document.getElementById('cityLat2').value = near_place.geometry.location.lat();
+                document.getElementById('cityLng2').value = near_place.geometry.location.lng();
+                
             });
+
         });
+
+        // var destination = 'destination';
+        // function test(){
+        //     console.log('destination');
+        // };
+        // $(document).ready(function() {
+        //     var autocompletedestination;
+        //     autocompletedestination = new google.maps.places.Autocomplete((document.getElementById(destination)), {
+        //         // types: ['geocode'],
+        //         componentRestrictions: {
+        //             country: "ID"
+        //         }
+        //     });
+
+        //     google.maps.event.addListener(autocompletedestination, 'place_changed', function() {
+        //         var near_destination = autocompletedestination.getPlace();
+        //             document.getElementById('cityLat').value = near_place.geometry.location.lat();
+        //             document.getElementById('cityLng').value = near_place.geometry.location.lng();
+
+        //         });
+        //     });
+        // });
+        // var destination1 = 'destination1';
+        // $(document).ready(function() {
+        //     var autocompletedestination1;
+        //     autocompletedestination1 = new google.maps.places.Autocomplete((document.getElementById(
+        //         destination1)), {
+        //         // types: ['geocode'],
+        //         componentRestrictions: {
+        //             country: "ID"
+        //         }
+        //     });
+
+        //     google.maps.event.addListener(autocompletedestination1, 'place_changed', function() {
+        //         var near_destination1 = autocompletedestination1.getPlace();
+        //             document.getElementById('cityLat1').value = near_place.geometry.location.lat();
+        //             document.getElementById('cityLng1').value = near_place.geometry.location.lng();
+
+        //         });
+        //     });
+        // });
 
     </script>
 
