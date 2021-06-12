@@ -27,7 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/maps', 'MapsController');
 Route::resource('/distance', 'DistanceController');
 Route::resource('/cabang', 'CabangController');
-Route::resource('/dijkstra', 'RouteController');
+Route::resource('/dijkstra', 'DijkstraController');
 Route::get('/polyline', 'MapsController@polyline')->name('polyline');
 Route::get('/polyline1', 'MapsController@polyline1')->name('polyline1');
 Route::resource('/route', 'RouteController');

@@ -27,7 +27,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="row">
-                    <form action="{{ route('maps.store') }}" method="post">
+                    <form action="http://127.0.0.1:8000/api/distance" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <div class="card-body" style="width: 100%">

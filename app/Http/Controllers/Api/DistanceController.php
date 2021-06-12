@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Estimation;
+use SplPriorityQueue;
+
 
 class DistanceController extends Controller
 {
@@ -15,6 +17,12 @@ class DistanceController extends Controller
         
         return $response;
     }
+
+    // public function compare( $priority1, $priority2 )
+    // {
+    //     if ($priority1 === $priority2) return 0;
+    //     return $priority1 < $priority2 ? 1 : -1;
+    // }
 
     public function getDistance(Request $request)
     {
@@ -36,10 +44,10 @@ class DistanceController extends Controller
                 'duration_value' => $getdurationval,
             ];
 
-            // $dataCreate = Estimation::create($res);
-            // $response_data_res = $dataCreate;
-            $estimate = 'Jarak dari '.$request->origin.' ke '.$request->destination.' adalah '.$getdistance;
-            // echo $estimate;die();
+            $dataCreate = Estimation::create($res);
+            $response_data_res = $dataCreate;
+            // $estimate = 'Jarak dari '.$request->origin.' ke '.$request->destination.' adalah '.$getdistance;
+            // // echo $estimate;die();
         } elseif ($request->destination2 == "") {
             $gmaps = $this->distance($request->origin, $request->destination);
             $gmaps1 = $this->distance($request->destination, $request->destination1);
@@ -81,8 +89,31 @@ class DistanceController extends Controller
                 $dataCreate1
             ];
         }
-        return redirect('/cabang')->with('success','Data berhasil ditambahkan');
+        return response($response_data_res);
     }
 
+    
+
+    public function hasil($origin, $destination)
+    {
+        // $estimate = new Estimation();
+        // $estimate->origin = $request->origin;
+        // $estimate->destination = $request->destination;
+        $response = [$origin, $destination];
+        return response($response);die();
+        
+        
+        $graph = new Graph();
+        $graph->add_vertex( 'Cikaret', array( 'Jatijajar' => 10511, 'Cilodong' => 3781, 'Citayam' => 8118, 'Karadenan' => 10181 ) );
+        $graph->add_vertex( 'Jatijajar', array( 'Cikaret' => 10511, 'Cilodong' => 7889, 'Babakanmadang' => 22707 ) );
+        $graph->add_vertex( 'Cilodong', array( 'Jatijajar' => 7889, 'Cikaret' => 3781, 'Citayam' => 10263 ) );
+        $graph->add_vertex( 'Citayam', array( 'Cikaret' => 8118, 'Cilodong' => 10263, 'Karadenan' => 8339 ) );
+        $graph->add_vertex( 'Karadenan', array( 'Cikaret' => 1081, 'Citayam' => 8339, 'Babakanmadang' => 12102  ) );
+        $graph->add_vertex( 'Babakanmadang', array( 'Karadenan' => 12102, 'Jatijajar' => 22707) );
+
+        // print_r($graph->shortest_path($estimate->origin, $estimate->destination));
+        // $hasil = [$graph->shortest_path($estimate->origin, $estimate->destination)];
+        // return response($graph->shortest_path($estimate->origin, $estimate->destination));
+    }
 
 }
