@@ -26,7 +26,7 @@
                     @endforeach
                 </select>
                 {{-- <input type="text" id="asd" value=""/> --}}
-                <p id="org">twstt er</p>
+                <p id="org"></p>
               </div>
               <div class="col-md-4">
                 <select name="destination" id="destination" required>
@@ -35,7 +35,7 @@
                     <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Nama_Cabang}}</option>
                     @endforeach
                 </select>
-                <p id="dest">testerrrrrrr</p>
+                <p id="dest"></p>
               </div>
             </div>
           </div>
@@ -60,12 +60,13 @@
     </section>
     <div class="box-body">
         <h3>Google Maps</h3>
-        <div id="floating-panel">
+        {{-- <div id="floating-panel">
             <input onclick="removeLine();" type="button" value="Remove line" />
-          </div>
+          </div> --}}
         <!--The div element for the map -->
         <div id="map"></div>
     </div>
+    <div id="dvDistance"></div>
     
 @stop
 @section('css')
@@ -341,19 +342,33 @@
         // origin: document.getElementById('org').innerHTML,
         // destination: document.getElementById('dest').innerHTML,
         waypoints: waypoints,
-        // optimizeWaypoints: true,
+        optimizeWaypoints: true,
         // destination: document.getElementById('destination2').value,
         travelMode: 'DRIVING'
       }, function(response, status) {
         if (status === 'OK') {
           directionsDisplay.setDirections(response);
+          computeTotalDistance(response)
         } else {
           window.alert('Directions request failed due to ' + status);
         }
       });
     }
 
-
+    function computeTotalDistance(result) {
+    var totalDist = 0;
+    var totalTime = 0;
+    var myroute = result.routes[0];
+    console.log(myroute);
+    for (i = 0; i < myroute.legs.length; i++) {
+        totalDist += myroute.legs[i].distance.value;
+        totalTime += myroute.legs[i].duration.value;
+        
+    console.log( myroute.legs[i].duration.value);
+    }
+    totalDist = totalDist / 1000.
+    document.getElementById("dvDistance").innerHTML = "total distance is: " + totalDist + " km<br>total time is: " + (totalTime / 60).toFixed(2) + " minutes";
+}
     
   </script>
 @stop

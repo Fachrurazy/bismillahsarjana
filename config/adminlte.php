@@ -247,8 +247,22 @@ return [
         ],
         [
             'text' => 'Saving Matrix',
-            'url'  => 'savingmatrix',
+            // 'url'  => 'saving',
             'icon' => 'fas fa-fw fa-truck',
+            'submenu' => [
+                [
+                    'text' => 'Distance Matrix',
+                    'url'  => 'distancematrix',
+                ],
+                [
+                    'text' => 'Saving Matrix',
+                    'url'  => 'saving',
+                ],
+                [
+                    'text' => 'Rute',
+                    'url'  => 'rute',
+                ],
+            ],
         ],
         [
             'text' => 'Dijkstra',
@@ -263,34 +277,34 @@ return [
         //             'text' => 'level_one',
         //             'url'  => '#',
         //         ],
-        //         [
-        //             'text'    => 'level_one',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'level_two',
-        //                     'url'  => '#',
-        //                 ],
-        //                 [
-        //                     'text'    => 'level_two',
-        //                     'url'     => '#',
-        //                     'submenu' => [
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                     ],
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
+        //         // [
+        //         //     'text'    => 'level_one',
+        //         //     'url'     => '#',
+        //         //     'submenu' => [
+        //         //         [
+        //         //             'text' => 'level_two',
+        //         //             'url'  => '#',
+        //         //         ],
+        //         //         [
+        //         //             'text'    => 'level_two',
+        //         //             'url'     => '#',
+        //         //             'submenu' => [
+        //         //                 [
+        //         //                     'text' => 'level_three',
+        //         //                     'url'  => '#',
+        //         //                 ],
+        //         //                 [
+        //         //                     'text' => 'level_three',
+        //         //                     'url'  => '#',
+        //         //                 ],
+        //         //             ],
+        //         //         ],
+        //         //     ],
+        //         // ],
+        //         // [
+        //         //     'text' => 'level_one',
+        //         //     'url'  => '#',
+        //         // ],
         //     ],
         // ],
     ],

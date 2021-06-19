@@ -48,6 +48,8 @@
                         <div class="form-group">
                             <div class="col-md-4">
                                 <div class="card-body">
+                                    <label>Kode Cabang</label><br>
+                                    <input type="text" name="Kode_Cabang" id="Kode_Cabang"/>
                                     <label>Nama Cabang</label><br>
                                     <input type="text" name="Nama_Cabang" id="Nama_Cabang"/>
                                     <label>Pemilik</label><br>

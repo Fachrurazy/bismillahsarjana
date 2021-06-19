@@ -37,6 +37,7 @@ class CabangController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
+            'Kode_Cabang' => 'required',
             'Nama_Cabang' => 'required',
             'Pemilik' => 'required',
             'Telepon' => 'required',
@@ -46,6 +47,7 @@ class CabangController extends Controller
         ]);
 
         Cabang::create([
+            'Kode_Cabang' => $request->get('Kode_Cabang'),
             'Nama_Cabang' => $request->get('Nama_Cabang'),
             'Pemilik' => $request->get('Pemilik'),
             'Telepon' => $request->get('Telepon'),
@@ -96,6 +98,7 @@ class CabangController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
+            'Kode_Cabang' => 'required',
             'Nama_Cabang' => 'required',
             'Pemilik' => 'required',
             'Telepon' => 'required',
@@ -105,6 +108,7 @@ class CabangController extends Controller
         ]);
 
         $cabang = array(
+            'Kode_Cabang' => $request->Nama_Cabang,
             'Nama_Cabang' => $request->Nama_Cabang,
             'Pemilik' => $request->Pemilik,
             'Telepon' => $request->Telepon,

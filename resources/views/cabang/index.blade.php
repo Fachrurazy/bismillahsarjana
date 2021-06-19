@@ -7,7 +7,7 @@
     </div><br>
     <div class="row">
         <div class="col-md-2">
-            <a class="btn btn-block btn-success" href="{{ route('cabang.create') }}"><b>+</b> CREATE CABANG</a>
+            <a class="btn btn-block btn-success" href="{{ route('cabang.createjarak') }}"><b>+</b> CREATE CABANG</a>
         </div>
     </div>
 @stop
@@ -83,7 +83,8 @@
                         <table id="datakoordinat" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    {{-- <th>ID</th> --}}
+                                    <th>Kode Cabang</th>
                                     <th>Nama Cabang</th>
                                     <th>Pemilik</th>
                                     <th>Telepon</th>
@@ -96,7 +97,8 @@
                             <tbody>
                                 @foreach ($datas as $cabang)
                                     <tr>
-                                        <td>{{ $cabang['id'] }}</td>
+                                        {{-- <td>{{ $cabang['id'] }}</td> --}}
+                                        <td>{{ $cabang['Kode_Cabang'] }}</td>
                                         <td>{{ $cabang['Nama_Cabang'] }}</td>
                                         <td>{{ $cabang['Pemilik'] }}</td>
                                         <td>{{ $cabang['Telepon'] }}</td>
@@ -111,7 +113,7 @@
                                                     data-latitude="{{ $cabang['Latitude'] }}"
                                                     data-longitude="{{ $cabang['Longitude'] }}" type="button" class="btn btn-warning"
                                                     data-toggle="modal" data-target="#modal-edit">EDIT</a>
-                                            <form method="POST" action="{{ route('cabang.destroy', $cabang->id) }}"
+                                            <form method="POST" action="{{ route('cabang.destroy', $cabang->Kode_Cabang) }}"
                                                 class="pull-left">
                                                 {{ csrf_field() }}
                                                 {{ method_field('delete') }}
