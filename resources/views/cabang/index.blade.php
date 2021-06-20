@@ -7,7 +7,7 @@
     </div><br>
     <div class="row">
         <div class="col-md-2">
-            <a class="btn btn-block btn-success" href="{{ route('cabang.createjarak') }}"><b>+</b> CREATE CABANG</a>
+            <a class="btn btn-block btn-success" href="{{ route('cabang.create') }}"><b>+</b> CREATE CABANG</a>
         </div>
     </div>
 @stop
@@ -113,7 +113,7 @@
                                                     data-latitude="{{ $cabang['Latitude'] }}"
                                                     data-longitude="{{ $cabang['Longitude'] }}" type="button" class="btn btn-warning"
                                                     data-toggle="modal" data-target="#modal-edit">EDIT</a>
-                                            <form method="POST" action="{{ route('cabang.destroy', $cabang->Kode_Cabang) }}"
+                                            <form method="POST" action="{{ route('cabang.destroy', $cabang->id) }}"
                                                 class="pull-left">
                                                 {{ csrf_field() }}
                                                 {{ method_field('delete') }}

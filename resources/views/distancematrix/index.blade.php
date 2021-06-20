@@ -23,9 +23,9 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Kode Cabang</th>
-                                    <th>Nama Cabang</th>
-                                    <th>Pemilik</th>
+                                    <th>Kode Origin</th>
+                                    <th>Kode Destination</th>
+                                    <th>Jarak</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -35,7 +35,7 @@
                                         <td>{{ $cabang['id'] }}</td>
                                         <td>{{ $cabang['Kode_Origin'] }}</td>
                                         <td>{{ $cabang['Kode_Destination'] }}</td>
-                                        <td>{{ $cabang['Distance'] }}</td>
+                                        <td>{{ $cabang['Distance'] }} KM</td>
                                         <td>
                                             <a data-id="{{ $cabang['id'] }}" data-Nama_Cabang="{{ $cabang['Nama_Cabang'] }}"
                                                     data-pemilik="{{ $cabang['Pemilik'] }}"

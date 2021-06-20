@@ -26,7 +26,8 @@ class SavingController extends Controller
      */
     public function create()
     {
-        return view('saving.create');
+        $datas = Cabang::all();
+        return view('saving.create', compact('datas'));
     }
     
 

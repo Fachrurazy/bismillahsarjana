@@ -5,14 +5,11 @@
     <div class="card-header">
         <h3>RUTE KELOMPOK</h3>
     </div><br>
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-md-3">
-            <a class="btn btn-block btn-success" href="{{ route('saving.create') }}"><b>+</b> CREATE SAVING MATRIX</a>
+            <a class="btn btn-block btn-danger" href="{{ route('rute.create') }}"><b>+</b> CREATE RUTE</a>
         </div>
-        <div class="col-md-3">
-        <a class="btn btn-block btn-warning" href="{{ route('rute.create') }}"><b>+</b> CREATE RUTE</a>
-        </div>
-    </div> --}}
+    </div>
 @stop
 @section('content')
 <section class="content">

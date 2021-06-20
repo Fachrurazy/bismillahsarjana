@@ -30,6 +30,8 @@ Route::resource('/cabang', 'CabangController');
 Route::resource('/dijkstra', 'DijkstraController');
 Route::resource('/saving', 'SavingController');
 Route::resource('/distancematrix', 'MatrixController');
+Route::get('/distancematrix/ajax/{Kode_Cabang}', 'MatrixController@get_cabang');
+Route::get('/distancematrix/distance', 'MatrixController@distance');
 Route::resource('/rute', 'RuteController');
 Route::resource('/rutedetail', 'RuteDetailController');
 Route::get('/rute/ajax/{Kode_Cabang}', 'RuteController@get_cabang');

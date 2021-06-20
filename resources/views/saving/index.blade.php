@@ -7,11 +7,8 @@
     </div><br>
     <div class="row">
         <div class="col-md-3">
-            <a class="btn btn-block btn-success" href="{{ route('saving.create') }}"><b>+</b> CREATE SAVING MATRIX</a>
+            <a class="btn btn-block btn-warning" href="{{ route('saving.create') }}"><b>+</b> CREATE SAVING MATRIX</a>
         </div>
-        <div class="col-md-3">
-        <a class="btn btn-block btn-warning" href="{{ route('rute.create') }}"><b>+</b> CREATE RUTE</a>
-    </div>
     </div>
 @stop
 @section('content')
@@ -28,7 +25,7 @@
                                     <th>ID</th>
                                     <th>Kode Origin</th>
                                     <th>Kode Destination</th>
-                                    <th>Saving</th>
+                                    <th>Saving List</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

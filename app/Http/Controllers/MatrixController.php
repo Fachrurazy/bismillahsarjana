@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cabang;
 use App\Matrix;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class MatrixController extends Controller
 {
@@ -36,6 +37,21 @@ class MatrixController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function get_cabang($id){
+        $dt = Cabang::where('id', $id)->first();
+
+        return response()->json([
+            'data' => $dt
+        ]);
+    }
+
+    // public function getcabangajax(Request $request){
+    //     if ($request->has('q')) {
+    //         $cari = $request->q;
+    //         $data = Cabang::where('Nama_Cabang', 'LIKE', '%'.$cari.'%')->get();
+    //         return response()->json($data);
+    //     }
+    // }
     public function store(Request $request)
     {
         Matrix::create([
@@ -89,5 +105,27 @@ class MatrixController extends Controller
     public function destroy(Matrix $matrix)
     {
         //
+    }
+
+    public function distance($alamat1, $alamat2)
+    {
+        $response = Http::post('https://maps.googleapis.com/maps/api/distancematrix/json?origins="'.$alamat1.'"&destinations="'.$alamat2.'"&key=AIzaSyBt_cq6yHgOOa8aUgC5_owypFYl32wSWjk&language=id-ID&mode=driving')->json();
+        
+        return $response;
+    }
+
+    public function getDistance(Request $request)
+    {
+            $gmaps = $this->distance($request->alamat1, $request->alamat2);
+
+            $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
+            $distance = $getdistanceval / 1000;
+            $res = [
+                'Kode_Origin' => $request->alamat1,
+                'Kode_Destination' => $request->alamat2,
+                'Distance' => $distance,
+            ];
+            echo $res;die();
+            $dataCreate = Matrix::create($res);
     }
 }

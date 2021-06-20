@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cabang;
 use App\Rute;
+use App\Rute_Detail;
 use App\RuteDetail;
 use App\Saving;
 use Illuminate\Http\Request;
@@ -86,7 +87,7 @@ class RuteController extends Controller
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
                 foreach ($cabang as $cbg){
-                    RuteDetail::insert([
+                    Rute_Detail::insert([
                         'id_rute' => $header,
                         'id_cabang' => $cbg,
                         'created_at' => date('Y-m-d H:i:s')
