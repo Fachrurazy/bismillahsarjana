@@ -25,26 +25,26 @@
                                     <th>ID</th>
                                     <th>Kode Origin</th>
                                     <th>Kode Destination</th>
-                                    <th>Jarak</th>
+                                    <th>Distance</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($datas as $cabang)
                                     <tr>
-                                        <td>{{ $cabang['id'] }}</td>
-                                        <td>{{ $cabang['Kode_Origin'] }}</td>
-                                        <td>{{ $cabang['Kode_Destination'] }}</td>
-                                        <td>{{ $cabang['Distance'] }} KM</td>
+                                        <td>{{ $cabang->id }}</td>
+                                        <td>{{ $cabang->Kode_Origin }}</td>
+                                        <td>{{ $cabang->Kode_Destination }}</td>
+                                        <td>{{ $cabang->Distance }} KM</td>
                                         <td>
-                                            <a data-id="{{ $cabang['id'] }}" data-Nama_Cabang="{{ $cabang['Nama_Cabang'] }}"
+                                            {{-- <a data-id="{{ $cabang['id'] }}" data-Nama_Cabang="{{ $cabang['Nama_Cabang'] }}"
                                                     data-pemilik="{{ $cabang['Pemilik'] }}"
                                                     data-telepon="{{ $cabang['Telepon'] }}"
                                                     data-alamat="{{ $cabang['Alamat'] }}"
                                                     data-latitude="{{ $cabang['Latitude'] }}"
                                                     data-longitude="{{ $cabang['Longitude'] }}" type="button" class="btn btn-warning"
-                                                    data-toggle="modal" data-target="#modal-edit">EDIT</a>
-                                            <form method="POST" action="{{ route('saving.destroy', $cabang->id) }}"
+                                                    data-toggle="modal" data-target="#modal-edit">EDIT</a> --}}
+                                            <form method="POST" action="{{ route('distancematrix.destroy', $cabang->id) }}"
                                                 class="pull-left">
                                                 {{ csrf_field() }}
                                                 {{ method_field('delete') }}

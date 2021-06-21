@@ -3,7 +3,7 @@
 @section('title', 'PEMBELIAN')
 
 @section('content_header')
-    <h1>TRANSAKSI PEMBELIAN</h1>
+    <h1>PENENTUAN RUTE</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-secondary">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Barang</h4>
+                <h4 class="modal-title">SAVING LIST</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
             </div>
@@ -25,7 +25,7 @@
                                 <table id="datakoordinat" class="table table-bordered table-striped tablesaving" style="color:black;">
                                     <thead>
                                         <tr>
-                                            <th>Select</th>
+                                            {{-- <th>Select</th> --}}
                                             <th>ID</th>
                                             <th>Kode Origin</th>
                                             <th>Kode Destination</th>
@@ -35,16 +35,15 @@
                                     <tbody>
                                         @foreach ($datas as $saving)
                                             <tr>
-                                                <td><input type="checkbox"></td>
-                                                <td>{{ $saving['id'] }}</td>
-                                                <td>{{ $saving['Kode_Origin'] }}</td>
-                                                <td>{{ $saving['Kode_Destination'] }}</td>
-                                                <td>{{ $saving['Saving'] }}</td>
+                                                <td>{{ $saving->id }}</td>
+                                                <td>{{ $saving->Kode_Origin }}</td>
+                                                <td>{{ $saving->Kode_Destination }}</td>
+                                                <td>{{ $saving->Saving }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <input type="button" value="select" class="select">
+                                {{-- <input type="button" value="select" class="select"> --}}
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -64,6 +63,8 @@
         <p>
             <button class="btn btn-sm btn-flat btn-warning btn-refresh"><i class="fa fa-refresh"></i>
                 Refresh</button>
+                <a href="{{route('rute.index')}}" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-backward"></i>
+                    Back</a>
         </p>
     </div>
     <section class="content">
@@ -86,7 +87,7 @@
                         <div class="col-md-3">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Cari Cabang</label><br>
+                                    <label for="exampleInputEmail1">SAVING LIST</label><br>
                                     <button class="btn btn-sm btn-flat btn-success" data-toggle="modal" data-target="#modal-create">CARI</button>
                                 </div>
                             </div>
@@ -137,6 +138,7 @@
     </script>
 @stop
 @section('js')
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"> </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous"></script>
@@ -192,72 +194,6 @@
                         }
                     })
                 }
-            })
-
-            //getbarang
-            $('.cari').select2({
-                placeholder: 'Cari Cabang...',
-                ajax: {
-                    url: "{{ url('rute/getcabang/ajax') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.Nama_Cabang,
-                                    id: item.Kode_Cabang
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            //select getbarang
-            $("select[name='cari_cabang']").change(function(e) {
-                e.preventDefault();
-                var Kode_Cabang = $(this).val();
-                var url = "{{ url('rute/ajax') }}" + '/' + Kode_Cabang;
-                var _this = $(this);
-
-                $.ajax({
-                    type: 'get',
-                    dataType: 'json',
-                    url: url,
-                    success: function(data) {
-                        console.log(data);
-                        _this.val('');
-
-                        var nilai = '';
-                        nilai += '<tr>';
-
-                        nilai += '<td>';
-                        nilai += data.data.Kode_Cabang;
-                        nilai +=
-                            '<input type="hidden" class="form-control" name="barang[]" value="' +
-                            data.data.id + '">';
-                        nilai += '</td>';
-                        nilai += '<td>';
-                        nilai += data.data.Alamat;
-                        nilai += '</td>';
-                        nilai += '<td>';
-                        nilai += data.data.Latitude;
-                        nilai += '</td>';
-                        nilai += '<td>';
-                        nilai += data.data.Longitude;
-                        nilai += '</td>';
-                        nilai += '<td>';
-                        nilai +=
-                            '<button class="btn btn-xs btn-danger hapus"><i class="fa fa-trash"></i></button>';
-                        nilai += '</td>';
-
-                        nilai += '</tr>';
-
-                        $('.barang-ajax').append(nilai);
-                    }
-                })
             })
 
             //button delete

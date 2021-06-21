@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cabang;
 use App\Matrix;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class MatrixController extends Controller
@@ -16,7 +17,16 @@ class MatrixController extends Controller
      */
     public function index()
     {
-        $datas = Matrix::all();
+        $datas = DB::select(
+            DB::raw("
+            select dm.id, c1.Kode_Cabang AS Kode_Origin, c2.Kode_Cabang AS Kode_Destination, dm.Distance
+            FROM matrixjarak dm
+            INNER JOIN cabang c1
+            ON dm.Kode_Origin = c1.id
+            INNER JOIN cabang c2
+            ON dm.Kode_Destination = c2.id;
+            ")
+        );
         return view('distancematrix.index', compact('datas'));
     }
 
@@ -102,9 +112,10 @@ class MatrixController extends Controller
      * @param  \App\Matrix  $matrix
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Matrix $matrix)
+    public function destroy($id)
     {
-        //
+        Matrix::find($id)->delete();
+        return redirect()->route('distancematrix.index')->with('success', 'Data berhasil dihapus');
     }
 
     public function distance($alamat1, $alamat2)

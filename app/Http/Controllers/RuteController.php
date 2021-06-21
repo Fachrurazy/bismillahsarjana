@@ -30,9 +30,19 @@ class RuteController extends Controller
      */
     public function create()
     {
-        $datas = Saving::all();
-        $cabang = Cabang::where('id', 1)->first();
-        return view('rute.create', compact('datas', 'cabang'));
+        $datas = DB::select(
+            DB::raw("
+            select svm.id, c1.Kode_Cabang AS Kode_Origin, c2.Kode_Cabang AS Kode_Destination, svm.Saving
+            FROM savingmatrix svm
+            INNER JOIN cabang c1
+            ON svm.Kode_Origin = c1.id
+            INNER JOIN cabang c2
+            ON svm.Kode_Destination = c2.id;
+            ")
+        );
+        // return $datas;
+        // $cabang = Cabang::where('id', 1)->first();
+        return view('rute.create', compact('datas'));
     }
 
     /**
@@ -144,8 +154,9 @@ class RuteController extends Controller
      * @param  \App\Rute  $rute
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rute $rute)
+    public function destroy($id)
     {
-        //
+        Rute_Detail::find($id)->delete();
+        return redirect()->route('saving.index')->with('success', 'Data berhasil dihapus');
     }
 }

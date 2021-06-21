@@ -16,6 +16,10 @@ class Rute extends Model
     {
         return $this->belongsTo(Cabang::class, 'id_cabang');
     }
+    public function cabangsaving()
+    {
+        return $this->belongsTo(Cabang::class, 'id');
+    }
     public function rute_detail()
     {
         return $this->belongsTo(Rute_Detail::class);

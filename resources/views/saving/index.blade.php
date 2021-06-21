@@ -32,18 +32,18 @@
                             <tbody>
                                 @foreach ($datas as $saving)
                                     <tr>
-                                        <td>{{ $saving['id'] }}</td>
-                                        <td>{{ $saving['Kode_Origin'] }}</td>
-                                        <td>{{ $saving['Kode_Destination'] }}</td>
-                                        <td>{{ $saving['Saving'] }}</td>
+                                        <td>{{ $saving->id }}</td>
+                                        <td>{{ $saving->Kode_Origin }}</td>
+                                        <td>{{ $saving->Kode_Destination }}</td>
+                                        <td>{{ $saving->Saving }}</td>
                                         <td>
-                                            <a data-id="{{ $saving['id'] }}" data-Nama_saving="{{ $saving['Nama_saving'] }}"
+                                            {{-- <a data-id="{{ $saving['id'] }}" data-Nama_saving="{{ $saving['Nama_saving'] }}"
                                                     data-pemilik="{{ $saving['Pemilik'] }}"
                                                     data-telepon="{{ $saving['Telepon'] }}"
                                                     data-alamat="{{ $saving['Alamat'] }}"
                                                     data-latitude="{{ $saving['Latitude'] }}"
                                                     data-longitude="{{ $saving['Longitude'] }}" type="button" class="btn btn-warning"
-                                                    data-toggle="modal" data-target="#modal-edit">EDIT</a>
+                                                    data-toggle="modal" data-target="#modal-edit">EDIT</a> --}}
                                             <form method="POST" action="{{ route('saving.destroy', $saving->id) }}"
                                                 class="pull-left">
                                                 {{ csrf_field() }}

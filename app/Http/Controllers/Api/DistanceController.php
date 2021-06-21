@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Estimation;
+use App\Matrix;
 use SplPriorityQueue;
 
 
@@ -22,23 +23,15 @@ class DistanceController extends Controller
     {
             $gmaps = $this->distance($request->origin, $request->destination);
 
-            $getdistance = $gmaps['rows'][0]['elements'][0]['distance']['text'];
             $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
-            $getduration = $gmaps['rows'][0]['elements'][0]['duration']['text'];
-            $getdurationval = $gmaps['rows'][0]['elements'][0]['duration']['value'];
+            $distance = $getdistanceval / 1000;
 
-            $res = [
-                'origin' => $request->origin,
-                'destination' => $request->destination,
-                'distance' => $getdistance,
-                'distance_value' => $getdistanceval,
-                'duration' => $getduration,
-                'duration_value' => $getdurationval,
-            ];
-
-            $dataCreate = Estimation::create($res);
-            $response_data_res = $dataCreate;
-            return response($response_data_res);
+            Matrix::create([
+                'Kode_Origin' => $request->ID1,
+                'Kode_Destination' => $request->ID2,
+                'Distance' => $distance,
+            ]);
+            return redirect('/distancematrix')->with('success','Data berhasil ditambahkan');
     }
 
     // public function getDistance(Request $request)
