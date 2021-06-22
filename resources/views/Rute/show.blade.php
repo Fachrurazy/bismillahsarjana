@@ -44,6 +44,9 @@
                                                     <th>Longitude</th>
                                                 </tr>
                                             </thead>
+                                            @php
+                                                $no = 1;   
+                                            @endphp
                                             <tbody>
                                                 @foreach ($dt->getdetail as $show)
                                                     <tr>
@@ -51,7 +54,13 @@
                                                         <td>{{ $show->cabangs->Alamat }}</td>
                                                         <td>{{ $show->cabangs->Latitude }}</td>
                                                         <td>{{ $show->cabangs->Longitude }}</td>
+                                                        <input type="text" value="{{ $show->cabangs->Latitude }}" id="lat-{{ $no }}" readonly>
+                                                        <input type="text" value="{{ $show->cabangs->Longitude }}" id="long-{{ $no }}" readonly>
                                                     </tr>
+                                                    
+                                                    @php
+                                                        $no++;
+                                                    @endphp
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -64,53 +73,29 @@
                         <h2> Euclidean Distance </h2>
                     </div>
                     <div class="card">
-                        <?php
-// $origin = [-7.013085699999999, 107.6455816];
-// $cabang1 = [-6.2447368, 107.0893353];
-// $cabang2 = [-6.2320719, 106.962546];
-// $cabang3 = [-6.2402719, 106.9698461];
-
-$cabang = [
-        [
-            'lat' => -6.2320719,
-            'long' => 107.962546,
-        ],
-        [
-            'lat' => -6.2447368,
-            'long' => 107.0893353,
-        ],
-        [
-            'lat' => -6.2402719,
-            'long' => 107.9698461,
-        ]
-    ];
-
-    $latAsal = -7.013085699999999;
-    $lonAsal = 107.6455816;
-
-    for ($i=0; $i < count($cabang); $i++) { 
-
-        $latTujuan = $cabang[$i]['lat'];
-        $lonTujuan = $cabang[$i]['long'];
-
-        $calcLatAsalTujuan = $latTujuan - $latAsal;
-        $calcLonAsalTujuan = $lonTujuan - $lonAsal;
-
-        $calc = (sqrt(pow($calcLatAsalTujuan, 2) + pow($calcLonAsalTujuan, 2))) * 111.319;
-
-        print('Latitude ' . $i . ' : ' . $cabang[$i]['lat']);
-        print("</br>");
-        print('Longitude ' . $i . ' : ' . $cabang[$i]['long']);
-        print("</br>");
-        print('Hasil Perhitungan ' . $calc);
-        print("</br>");
-        print("</br>");
-    }
-?>
+                        <div class="card-body">
+                        <table>
+                            @php
+                                $jml = 1;   
+                            @endphp
+                            @foreach ($result as $item)
+                                <tr>
+                                    <td>{{$cabang[$jml-1]['kc']}}</td>
+                                    <td>{{ $item }}</td>
+                                </tr>
+                                @php
+                                    $jml++;
+                                @endphp
+                            @endforeach
+                            
+                        </table>
+                    </div>
+                        <div class="col-12">
+                            <button type="submit" id="inputbtn" class="btn btn-info">show polyline</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <div class="card">
         <div class="col-12">
@@ -125,6 +110,8 @@ $cabang = [
             </div>
         </div>
     </div>
+
+    
 @endsection
 
 @section('css')
@@ -162,17 +149,33 @@ $cabang = [
             directionsDisplay.setMap(map);
 
             var onChangeHandler = function() {
-                a = document.getElementById('origin').value;
-                b = document.getElementById('destination').value;
+                // a = document.getElementById('Alamat-1').value;
+                // b = document.getElementById('Alamat-2').value;
                 calculateAndDisplayRoute(directionsService, directionsDisplay);
             };
-            document.getElementById('inputbtn').addEventListener('click', onChangeHandler);;
+            console.log(document.getElementById('lat-1').value);
+            document.getElementById('inputbtn').addEventListener('click', onChangeHandler);
         }
 
         function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var latlong = <?php echo json_encode( $dt->getdetail ); ?>;
+
+            // console.log(latlong);
+            var waypoints = [];
+            for( i in latlong ) {
+                // console.log(latlong[i]['cabangs']['Latitude']);
+                waypoints.push({
+                    location: new google.maps.LatLng(latlong[i]['cabangs']['Latitude'],latlong[i]['cabangs']['Longitude']),
+                    stopover: true
+                });
+            }
+                var originA = document.getElementById('lat-1').value + "," + document.getElementById('long-1').value;
+                var destinationA = document.getElementById('lat-4').value + "," + document.getElementById('long-4').value;
             directionsService.route({
-                origin: document.getElementById('origin').value,
-                destination: document.getElementById('destination1').value,
+                origin: originA,
+                destination: originA,
+                waypoints: waypoints,
+                optimizeWaypoints: true,
                 travelMode: 'DRIVING'
             }, function(response, status) {
                 if (status === 'OK') {
@@ -182,6 +185,7 @@ $cabang = [
                 }
             });
         }
+
     </script>
 @endsection
 
@@ -194,6 +198,7 @@ $cabang = [
             swal("Berhasil!", "{!! Session::get('success') !!}", "success", {
                 button: "OK",
             })
+
         </script>
     @endif
     @if (Session::has('error'))
@@ -205,6 +210,7 @@ $cabang = [
                 showConfirmButton: false,
                 timer: 1500
             });
+
         </script>
         <?php Session::forget('error'); ?>
     @endif
@@ -219,6 +225,7 @@ $cabang = [
             $('.preloader').fadeIn();
             location.reload();
         })
+
     </script>
 
 @endsection

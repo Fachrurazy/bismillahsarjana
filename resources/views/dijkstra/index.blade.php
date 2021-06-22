@@ -22,7 +22,7 @@
                 <select name="origin" id="origin" required>
                     <option value="">Pilih Origin</option>
                     @foreach ($datas as $estimation)
-                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Nama_Cabang}}</option>
+                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Kode_Cabang}} - {{$estimation->Nama_Cabang}}</option>
                     @endforeach
                 </select>
                 {{-- <input type="text" id="asd" value=""/> --}}
@@ -32,7 +32,7 @@
                 <select name="destination" id="destination" required>
                     <option value="">Pilih Destination</option>
                     @foreach ($datas as $estimation)
-                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Nama_Cabang}}</option>
+                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Kode_Cabang}} - {{$estimation->Nama_Cabang}}</option>
                     @endforeach
                 </select>
                 <p id="dest"></p>
@@ -176,13 +176,33 @@
     
 
     var g = new Graph();
-    
-    g.addVertex('Cikaret', {Jatijajar: 10511, Cilodong: 3781, Citayam: 8118, Karadenan: 10181});
-    g.addVertex('Jatijajar', {Cikaret: 10511, Cilodong: 7889, Babakanmadang: 22707});
-    g.addVertex('Cilodong', {Jatijajar: 7889, Cikaret: 3781, Citayam: 10263});
-    g.addVertex('Citayam', {Cikaret: 8118, Cilodong: 10263, Karadenan: 8339});
-    g.addVertex('Karadenan', {Cikaret: 1081, Citayam: 8339, Babakanmadang: 12102});
-    g.addVertex('Babakanmadang', {Karadenan: 12102, Jatijajar: 22707});
+
+    // g.addVertex('Pabrik', {Cikaret: 180679});
+    // g.addVertex('Cikaret', {Jatijajar: 10511, Cilodong: 3781, Citayam: 8118, Karadenan: 10181, Pabrik: 180679});
+    // g.addVertex('Jatijajar', {Cikaret: 10511, Cilodong: 7889, Babakanmadang: 22707});
+    // g.addVertex('Cilodong', {Jatijajar: 7889, Cikaret: 3781, Citayam: 10263});
+    // g.addVertex('Citayam', {Cikaret: 8118, Cilodong: 10263, Karadenan: 8339});
+    // g.addVertex('Karadenan', {Cikaret: 1081, Citayam: 8339, Babakanmadang: 12102});
+    // g.addVertex('Babakanmadang', {Karadenan: 12102, Jatijajar: 22707});
+
+    g.addVertex('Pabrik', {Cibitung: 136040, Kranji: 145805});
+    g.addVertex('Cibitung', {Kranji: 18628, Cakung: 32688, Pabrik: 136040});
+    g.addVertex('Kranji', {Bintara: 2049, Handoyo: 12220, CileungsiIndah: 25442, Pabrik: 136040, Cakung: 13811, Cibitung: 18628});
+    g.addVertex('Bintara', {Tebet: 8118, Jatikramat: 10263, Handoyo: 8339, Kranji: 13811, Cakung: 13811, TanjungPriok: 23057});
+    g.addVertex('Cakung', {Kranji: 13811, Bintara: 13086, Tebet: 18366, TanjungPriok: 23057, Cibitung: 32688});
+    g.addVertex('TanjungPriok', {Tebet: 21569, Bintara: 26699, Cakung: 13811});
+    g.addVertex('Tebet', {Jatikramat: 17602, TanjungPriok: 23057, Cakung: 13811, Bintara: 13086});
+    g.addVertex('Jatikramat', {Jatijajar: 26886, Cilodong: 29325, Handoyo: 7311, Bintara: 13086 , Tebet: 18366});
+    g.addVertex('Handoyo', {Jatijajar: 31805, CileungsiIndah: 13222, Jatikramat: 17602, Kranji: 13811, Bintara: 13086});
+    g.addVertex('CileungsiIndah', {Jatijajar: 18831, DarnoBogor: 6447, Kranji: 13811, Handoyo: 7311});
+    g.addVertex('Jatijajar', {Cilodong: 5778, DarnoBogor: 12709, Cibinong: 9201, Jatikramat: 10263, Handoyo: 8339, CileungsiIndah: 13222});
+    g.addVertex('Cilodong', {DarnoBogor: 12709, Cibinong: 9201, Cikaret: 10611, Jatikramat: 10263, Jatijajar: 31805});
+    g.addVertex('DarnoBogor', {Cibinong: 20108, Babakanmadang: 24522, Jatijajar: 31805, CileungsiIndah: 13222, Cilodong: 5778});
+    g.addVertex('Cikaret', {Citayam: 8118, Cilodong: 5778, Cibinong: 16519});
+    g.addVertex('Cibinong', {Cikaret: 3262, Citayam: 8950, Karadenan: 11006, Babakanmadang: 16519, Cilodong: 5778, DarnoBogor: 12709, Jatijajar: 31805});
+    g.addVertex('Citayam', {Karadenan: 8339, Cikaret: 3262, Cibinong: 20108});
+    g.addVertex('Karadenan', {Babakanmadang: 12102, Citayam: 8118, Cibinong: 16519});
+    g.addVertex('Babakanmadang', {Karadenan: 12102, Cibinong: 16519, DarnoBogor: 24522});
     
     // Log test, with the addition of reversing the path and prepending the first node so it's more readable
     // console.log(o,g);
@@ -191,51 +211,148 @@
     
     document.getElementById("lblPath").innerHTML = "jalur terdekat:" + hasil;
     allDestination = hasil
-    
-    if (o == "Cikaret")
+
+  if (o == "Pabrik")
     {
-        document.getElementById("org").innerHTML = "-6.468566,106.8417005";
+        document.getElementById("org").innerHTML = "-7.013085699999999,107.6455816";
     }
-    else if (o == "Cilodong")
+    else if (o == "Cibitung")
     {
-        document.getElementById("org").innerHTML = "-6.4235896,106.8357255";
+        document.getElementById("org").innerHTML = "-6.2447368,107.0893353";
     }
-    else if (o == "Karadenan")
+    else if (o == "Kranji")
     {
-        document.getElementById("org").innerHTML = "-6.522043999999999,106.8131834";
+        document.getElementById("org").innerHTML = "-6.2402719,106.9698461";
     }
-    else if (o == "Citayam")
+    else if (o == "Bintara")
     {
-        document.getElementById("org").innerHTML = "-6.4673531,106.8032647";
+        document.getElementById("org").innerHTML = "-6.2320719,106.962546";
+    }
+    else if (o == "Cakung")
+    {
+        document.getElementById("org").innerHTML = "-6.1676666,106.9483334";
+    }
+    else if (o == "TanjungPriok")
+    {
+        document.getElementById("org").innerHTML = "-6.1269396,106.8573167";
+    }
+    else if (o == "Tebet")
+    {
+        document.getElementById("org").innerHTML = "-6.227895900000001,106.8586937";
+    }
+    else if (o == "Jatikramat")
+    {
+        document.getElementById("org").innerHTML = "-6.2860957,106.9410857";
+    }
+    else if (o == "Handoyo")
+    {
+        document.getElementById("org").innerHTML = "-6.3105664,106.9847585";
+    }
+    else if (o == "CileungsiIndah")
+    {
+        document.getElementById("org").innerHTML = "-6.4076092,106.9658947";
     }
     else if (o == "Jatijajar")
     {
         document.getElementById("org").innerHTML = "-6.414000199999999,106.8704251";
     }
+    else if (o == "Cilodong")
+    {
+        document.getElementById("org").innerHTML = "-6.4235896,106.8357255";
+    }
+    else if (o == "DarnoBogor")
+    {
+        document.getElementById("org").innerHTML = "-6.4252892,106.9481792";
+    }
+    else if (o == "Cikaret")
+    {
+        document.getElementById("org").innerHTML = "-6.468566,106.8417005";
+    }
+    else if (o == "Cibinong")
+    {
+        document.getElementById("org").innerHTML = "-6.455612399999999,106.8264144";
+    }
+    else if (o == "Citayam")
+    {
+        document.getElementById("org").innerHTML = "-6.4673531,106.8032647";
+    }
+    else if (o == "Karadenan")
+    {
+        document.getElementById("org").innerHTML = "-6.522043999999999,106.8131834";
+    }
     else if (o == "Babakanmadang")
     {
         document.getElementById("org").innerHTML = "-6.561322199999999,106.8579398";
-    }
-
-    if (d == "Cikaret")
+  }
+   //batasan
+   if (d == "Pabrik")
     {
-        document.getElementById("dest").innerHTML = "-6.468566,106.8417005";
+        document.getElementById("dest").innerHTML = "-7.013085699999999,107.6455816";
+    }
+    else if (d == "Cibitung")
+    {
+        document.getElementById("dest").innerHTML = "-6.2447368,107.0893353";
+    }
+    else if (d == "Kranji")
+    {
+        document.getElementById("dest").innerHTML = "-6.2402719,106.9698461";
+    }
+    else if (d == "Bintara")
+    {
+        document.getElementById("dest").innerHTML = "-6.2320719,106.962546";
+    }
+    else if (d == "Cakung")
+    {
+        document.getElementById("dest").innerHTML = "-6.1676666,106.9483334";
+    }
+    else if (d == "TanjungPriok")
+    {
+        document.getElementById("dest").innerHTML = "-6.1269396,106.8573167";
+    }
+    
+    else if (d == "Tebet")
+    {
+        document.getElementById("dest").innerHTML = "-6.227895900000001,106.8586937";
+    }
+    else if (d == "Jatikramat")
+    {
+        document.getElementById("dest").innerHTML = "-6.2860957,106.9410857";
+    }
+    else if (d == "Handoyo")
+    {
+        document.getElementById("dest").innerHTML = "-6.3105664,106.9847585";
+    }
+    else if (d == "CileungsiIndah")
+    {
+        document.getElementById("dest").innerHTML = "-6.4076092,106.9658947";
+    }
+    else if (d == "Jatijajar")
+    {
+        document.getElementById("dest").innerHTML = "-6.414000199999999,106.8704251";
     }
     else if (d == "Cilodong")
     {
         document.getElementById("dest").innerHTML = "-6.4235896,106.8357255";
     }
-    else if (d == "Karadenan")
+    else if (d == "DarnoBogor")
     {
-        document.getElementById("dest").innerHTML = "-6.522043999999999,106.8131834";
+        document.getElementById("dest").innerHTML = "-6.4252892,106.9481792";
+    }
+    else if (d == "Cikaret")
+    {
+        document.getElementById("dest").innerHTML = "-6.468566,106.8417005";
+    }
+    else if (d == "Cibinong")
+    {
+        document.getElementById("dest").innerHTML = "-6.455612399999999,106.8264144";
     }
     else if (d == "Citayam")
     {
         document.getElementById("dest").innerHTML = "-6.4673531,106.8032647";
     }
-    else if (d == "Jatijajar")
+    else if (d == "Karadenan")
     {
-        document.getElementById("dest").innerHTML = "-6.414000199999999,106.8704251";
+        document.getElementById("dest").innerHTML = "-6.522043999999999,106.8131834";
     }
     else if (d == "Babakanmadang")
     {
@@ -299,9 +416,64 @@
             console.log(items.length);
             console.log(items[i]);
             if (items[i] != "" || items[i] !== fromorigin || items[i] !== lastdestination) {
-                if (items[i] == "Cikaret")
+                if (items[i] == "Pabrik")
                 {
-                    items[i] = "-6.468566,106.8417005";
+                    items[i] = "-7.013085699999999,107.6455816";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Cibitung")
+                {
+                    items[i] = "-6.2447368,107.0893353";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Kranji")
+                {
+                    items[i] = "-6.2402719,106.9698461";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Bintara")
+                {
+                    items[i] = "-6.2320719,106.962546";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Jatijajar")
+                {
+                    items[i] = "-6.414000199999999,106.8704251";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Cakung")
+                {
+                    items[i] = "-6.1676666,106.9483334";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "TanjungPriok")
+                {
+                    items[i] = "-6.1269396,106.8573167";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Tebet")
+                {
+                    items[i] = "-6.227895900000001,106.8586937";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Jatikramat")
+                {
+                    items[i] = "-6.2860957,106.9410857";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Handoyo")
+                {
+                    items[i] = "-6.3105664,106.9847585";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "CileungsiIndah")
+                {
+                    items[i] = "-6.4076092,106.9658947";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Jatijajar")
+                {
+                    items[i] = "-6.414000199999999,106.8704251";
                     console.log(items[i]);
                 }
                 else if (items[i] == "Cilodong")
@@ -309,9 +481,19 @@
                     items[i] = "-6.4235896,106.8357255";
                     console.log(items[i]);
                 }
-                else if (items[i] == "Karadenan")
+                else if (items[i] == "DarnoBogor")
                 {
-                    items[i] = "-6.522043999999999,106.8131834";
+                    items[i] = "-6.4252892,106.9481792";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Cikaret")
+                {
+                    items[i] = "-6.468566,106.8417005";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Cibinong")
+                {
+                    items[i] = "-6.455612399999999,106.8264144";
                     console.log(items[i]);
                 }
                 else if (items[i] == "Citayam")
@@ -319,9 +501,9 @@
                     items[i] = "-6.4673531,106.8032647";
                     console.log(items[i]);
                 }
-                else if (items[i] == "Jatijajar")
+                else if (items[i] == "Karadenan")
                 {
-                    items[i] = "-6.414000199999999,106.8704251";
+                    items[i] = "-6.522043999999999,106.8131834";
                     console.log(items[i]);
                 }
                 else if (items[i] == "Babakanmadang")
@@ -368,9 +550,9 @@
     }
     totalDist = totalDist / 1000.
     document.getElementById("dvDistance").innerHTML = "total distance is: " + totalDist + " km<br>total time is: " + (totalTime / 60).toFixed(2) + " minutes";
-}
+    }
     
-  </script>
+</script>
 @stop
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"> </script>

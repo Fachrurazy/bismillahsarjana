@@ -115,8 +115,69 @@ class RuteController extends Controller
     public function show($id)
     {
         $dt = Rute::find($id);
-        
-        return view('rute.show', ['dt' => $dt]);
+        // $cabang = [
+        //     [
+        //     'lat' => -6.2320719,
+        //     'long' => 107.962546,
+        //     ],
+        //     [
+        //     'lat' => -6.2447368,
+        //     'long' => 107.0893353,
+        //     ],
+        //     [
+        //     'lat' => -6.2402719,
+        //     'long' => 107.9698461,
+        //     ],
+        // ];
+        $cabang = [];
+        $latAsal = $dt->getdetail[0]->cabangs->Latitude;
+        $lonAsal = $dt->getdetail[0]->cabangs->Longitude;
+
+        // $checkData = 0;
+        // foreach ($dt->getdetail as $key => $value) {
+        //     if ($checkData) {
+        //         # code...
+        //     }          
+        //     array_push($cabang, 
+        //     [
+        //         'kc' => $value->cabangs->Kode_Cabang, 
+        //         'lat' => $value->cabangs->Latitude, 
+        //         'long' => $value->cabangs->Longitude
+        //     ]);
+        // }
+
+        for ($i=1; $i < count($dt->getdetail); $i++) { 
+            array_push($cabang, 
+            [
+                'kc' => $dt->getdetail[$i]->cabangs->Kode_Cabang, 
+                'lat' => $dt->getdetail[$i]->cabangs->Latitude, 
+                'long' => $dt->getdetail[$i]->cabangs->Longitude
+            ]);
+        }
+
+        $result = [];
+        for ($i=0; $i < count($cabang); $i++) { 
+            $latTujuan = $cabang[$i]['lat'];
+            $lonTujuan = $cabang[$i]['long']; 
+            $lingkarBumi = 111.319;
+            $calcLatAsalTujuan = $latTujuan - $latAsal;
+            $calcLonAsalTujuan = $lonTujuan - $lonAsal; 
+            $calc = sqrt(pow($calcLatAsalTujuan, 2) + pow($calcLonAsalTujuan, 2)) * $lingkarBumi;
+            array_push($result, $calc);
+        }
+        sort($result);
+
+        // print_r($result);
+        // print("<br>");
+        // print_r($cabang);
+        // return $result . "<br>" . $cabang;
+        // return $cabang;
+        // return $dt->getdetail[0]->cabangs->Latitude;
+        return view('rute.show', [
+            'cabang' => $cabang, 
+            'dt' => $dt,
+            'result' => $result
+        ]);
     }
 
     /**
