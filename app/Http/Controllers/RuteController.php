@@ -84,12 +84,6 @@ class RuteController extends Controller
             }
             
             $cabang = $request->cabang;
-            // echo $date;
-            // echo $kode;
-            // foreach($barang as $e =>$brg){
-            // echo $brg;
-            // echo $qty[$e];
-            // }
             try{
             DB::transaction(function()use($cabang,$kode) {
                 $header = Rute::insertGetId([

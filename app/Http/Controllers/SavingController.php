@@ -76,7 +76,7 @@ class SavingController extends Controller
             'Saving' => $saving,
         ];
         // echo print_r($res);die();
-        Saving::create([$res]);
+        Saving::create($res);
         return redirect('/saving')->with('success','Data berhasil ditambahkan');
 
     }

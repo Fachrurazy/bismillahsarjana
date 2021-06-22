@@ -139,7 +139,6 @@
       directionsService.route({
         origin: document.getElementById('origin').value,
         destination: document.getElementById('destination1').value,
-        destination: document.getElementById('destination2').value,
         travelMode: 'DRIVING'
       }, function(response, status) {
         if (status === 'OK') {
