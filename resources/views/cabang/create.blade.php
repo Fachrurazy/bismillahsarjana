@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 @section('content_header')
 
-    <h1>Dashboard</h1>
+    <h1>Tambah Data Cabang</h1>
 @stop
 
 @section('content')
@@ -16,11 +16,6 @@
                                 class="fa fa-backward"></i>Back</a>
                     </p>
                 </div>
-            </div>
-            <div class="box-body">
-                <h3>Google Maps</h3>
-                <!--The div element for the map -->
-                <div id="map"></div>
             </div>
         </div>
 
@@ -49,7 +44,7 @@
                             <div class="col-md-4">
                                 <div class="card-body">
                                     <label>Kode Cabang</label><br>
-                                    <input type="text" name="Kode_Cabang" id="Kode_Cabang"/>
+                                    <input type="text" name="Kode_Cabang" id="Kode_Cabang" value="{{$kode}}" readonly/>
                                     <label>Nama Cabang</label><br>
                                     <input type="text" name="Nama_Cabang" id="Nama_Cabang"/>
                                     <label>Pemilik</label><br>
@@ -61,11 +56,15 @@
                                     <label for="exampleInputEmail1">Latitude</label><br>
                                     <input type="text" id="cityLat" name="Latitude" />
                                     <label for="exampleInputEmail1">Longitute</label><br>
-                                    <input type="text" id="cityLng" name="Longitude" />
+                                    <input type="text" id="cityLng" name="Longitude" /><br>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-body">
+                                    <button type="submit">Simpan</button>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit">Simpan</button>
                     </form>
                 </div>
             </div>

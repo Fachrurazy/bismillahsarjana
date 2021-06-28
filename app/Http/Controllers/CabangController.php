@@ -25,7 +25,20 @@ class CabangController extends Controller
      */
     public function create()
     {
-        return view('cabang.create');
+        $getRow = Cabang::orderBy('Kode_Cabang', 'DESC')->get();
+        $rowCount = $getRow->count();
+        $lastId = $getRow->first();
+        $kode = "C00";
+
+        if($rowCount > 0){
+            $strKode = substr($lastId->Kode_Cabang, 1, 2);
+            if ($strKode < 99){
+                $kode = "C".''.($strKode + 1);
+            }else{
+                $kode = "C01".''.($strKode + 1);
+            }
+        }
+        return view('cabang.create', compact('kode'));
     }
 
     /**

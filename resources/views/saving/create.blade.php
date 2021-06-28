@@ -3,7 +3,7 @@
 @section('title', 'DATA SAVING MATRIX')
 @section('content_header')
     <div class="card-header">
-        <h1>Saving Matrix</h1><br>
+        <h1>Tambah Saving Matrix</h1><br>
         <h3>Rumus Saving Matrix:</h3> 
         <p><h4>Sij = Doi + Doj - Dij</h4></p>
         <p><h6>Sij = jarak titik awal dan tujuan<br>

@@ -70,7 +70,7 @@ class RuteController extends Controller
 
     public function store(Request $request)
     {
-        $getRow = Rute::orderBy('id', 'DESC')->get();
+            $getRow = Rute::orderBy('id', 'DESC')->get();
             $rowCount = $getRow->count();
             $lastId = $getRow->first();
             $kode="RUTE01";

@@ -206,7 +206,7 @@
         var longitude = button.data('longitude')
 
         var modal = $(this)
-        modal.find('.modal-title').text('EDIT DATA BARANG');
+        modal.find('.modal-title').text('EDIT DATA CABANG');
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #nama_cabang').val(nama_cabang);
         modal.find('.modal-body #pemilik').val(pemilik);

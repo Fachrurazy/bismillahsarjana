@@ -3,7 +3,7 @@
 @section('title', 'Pembelian Barang')
 @section('content_header')
     <div class="card-header">
-        <h3>DATA INVOICE</h3>
+        <h3>DATA RUTE DETAIL</h3>
     </div><br>
 @stop
 @section('content')
@@ -54,8 +54,8 @@
                                                         <td>{{ $show->cabangs->Alamat }}</td>
                                                         <td>{{ $show->cabangs->Latitude }}</td>
                                                         <td>{{ $show->cabangs->Longitude }}</td>
-                                                        <input type="text" value="{{ $show->cabangs->Latitude }}" id="lat-{{ $no }}" readonly>
-                                                        <input type="text" value="{{ $show->cabangs->Longitude }}" id="long-{{ $no }}" readonly>
+                                                        <input type="hidden" value="{{ $show->cabangs->Latitude }}" id="lat-{{ $no }}" readonly>
+                                                        <input type="hidden" value="{{ $show->cabangs->Longitude }}" id="long-{{ $no }}" readonly>
                                                     </tr>
                                                     
                                                     @php

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Cabang;
+use App\Matrix;
+use App\Rute;
+use App\Saving;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $cbg = Cabang::count();
+        $cabang = Cabang::all()->take(5);
+        $dm = Matrix::count();
+        $svg = Saving::count();
+        $rute = Rute::count();
+        $rutedetail = Rute::all()->take(5);
+        return view('home', compact('cbg', 'cabang', 'dm', 'svg', 'rute', 'rutedetail'));
     }
 }

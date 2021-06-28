@@ -3,7 +3,7 @@
 @section('title', 'DATA SAVING MATRIX')
 @section('content_header')
     <div class="card-header">
-        <h3>Distance Matrix</h3>
+        <h3>Tambah Distance Matrix</h3>
     </div><br>
 @stop
 @section('content')
