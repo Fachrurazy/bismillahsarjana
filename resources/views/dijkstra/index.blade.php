@@ -3,7 +3,7 @@
 @section('title', 'DATA KOORDINAT')
 @section('content_header')
     <div class="card-header">
-        <h3>ROUTE</h3>
+        <h3>PENCARIAN RUTE DIJKSTRA</h3>
     </div><br>
     {{-- <div class="row">
         <div class="col-md-2">
@@ -13,44 +13,75 @@
     
 @stop
 @section('content')
-<div class="row">
+<div class="container">
     {{-- <form action="{{route('dijkstra.store')}}" method="POST"> --}}
         {{-- {{ csrf_field() }} --}}
-        <div class="container">
+        {{-- <div class="container"> --}}
             <div class="row">
               <div class="col-md-4">
-                <select name="origin" id="origin" required>
+                <select name="origin" id="origin" class="custom-select" required>
                     <option value="">Pilih Origin</option>
                     @foreach ($datas as $estimation)
-                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Kode_Cabang}} - {{$estimation->Nama_Cabang}}</option>
+                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Nama_Cabang}}</option>
                     @endforeach
                 </select>
                 {{-- <input type="text" id="asd" value=""/> --}}
-                <p id="org"></p>
+                <p hidden id="org"></p>
               </div>
               <div class="col-md-4">
-                <select name="destination" id="destination" required>
+                <select name="destination" id="destination" class="custom-select" required>
                     <option value="">Pilih Destination</option>
                     @foreach ($datas as $estimation)
-                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Kode_Cabang}} - {{$estimation->Nama_Cabang}}</option>
+                    <option value="{{$estimation->Nama_Cabang}}">{{$estimation->Nama_Cabang}}</option>
                     @endforeach
                 </select>
-                <p id="dest"></p>
+                <p hidden id="dest"></p>
+              </div>
+              {{-- <div class="input-group-append"> --}}
+                <div class="col-md-4">
+                <button class="btn btn-outline-primary" type="submit" id="inputbtn" onclick="myFunction()">Cari Rute</button>
               </div>
             </div>
           </div>
-          <button type="submit" id="inputbtn" onclick="myFunction()">Simpan</button>
     {{-- </form> --}}
+  </div>
 </div>
+<br>
     <section class="content">
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                  <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Tujuan Rute</th>
+                        <td scope="col" id="namarute"></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="col">Total Jarak</th>
+                        <td scope="col" id="dvDistance"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Total Waktu</th>
+                        <td scope="col" id="dvDuration"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Rute</th>
+                        <td scope="col" id="lblPath"></td>
+                      </tr>
+                    </tbody>
+                  </table>
                     <!-- /.card-header -->
-                    <div class="card-body">
-                        <h1 id="lblPath">Test</h1>
-                    </div>
+                     {{-- <div class="card-body"> 
+                      <p id="namarute"></p> 
+                        <h1 id="lblPath"></h1>
+                        <div id="dvDistance"></div>
+                    </div> --}}
                     <!-- /.card-body -->
+                  </div>
                 </div>
                 <!-- /.card -->
             </div>
@@ -58,15 +89,26 @@
         </div>
         <!-- /.row -->
     </section>
-    <div class="box-body">
+
+    <div class="card-header">
         <h3>Google Maps</h3>
+        <div id="map"></div>
         {{-- <div id="floating-panel">
             <input onclick="removeLine();" type="button" value="Remove line" />
           </div> --}}
         <!--The div element for the map -->
-        <div id="map"></div>
     </div>
-    <div id="dvDistance"></div>
+
+{{-- PENGUJIAN WHITE BOX --}}
+  {{-- <//?php
+    // $a=array("a"=>1.2,"b"=>2,"c"=>3);
+    // if (array_sum($a) == 7) {
+    //         echo('VALID');
+    //     } else {
+    //         echo('TIDAK VALID');
+    //     }
+  ?> --}}
+{{-- PENGUJIAN WHITE BOX --}}
     
 @stop
 @section('css')
@@ -185,36 +227,82 @@
     // g.addVertex('Karadenan', {Cikaret: 1081, Citayam: 8339, Babakanmadang: 12102});
     // g.addVertex('Babakanmadang', {Karadenan: 12102, Jatijajar: 22707});
 
-    g.addVertex('Pabrik', {Cibitung: 136040, Kranji: 145805});
-    g.addVertex('Cibitung', {Kranji: 18628, Cakung: 32688, Pabrik: 136040});
-    g.addVertex('Kranji', {Bintara: 2049, Handoyo: 12220, CileungsiIndah: 25442, Pabrik: 136040, Cakung: 13811, Cibitung: 18628});
-    g.addVertex('Bintara', {Tebet: 8118, Jatikramat: 10263, Handoyo: 8339, Kranji: 13811, Cakung: 13811, TanjungPriok: 23057});
+    g.addVertex('Pabrik', {Cianjur: 82835, Sukamanah: 76749, Indramayu: 154153, Garut: 46476});
+    g.addVertex('Tegal', {Majalengka: 126801, Brebes: 12116});
+    g.addVertex('Majalengka', {Tegal: 126801, Brebes: 118629, Cirebon: 22190, Kadipaten: 13319});
+    g.addVertex('Brebes', {Majalengka: 118629, Cirebon: 94045, Kadipaten: 124620, Tegal: 12116});
+    g.addVertex('Kadipaten', {Majalengka: 13319, Brebes: 124620, Cirebon: 34985, Garut: 63329, Indramayu: 59748});
+    g.addVertex('Cirebon', {Kadipaten: 34985, Brebes: 94045, Indramayu: 88933, Garut: 95955, Majalengka: 22190});
+    g.addVertex('Indramayu', {Cirebon: 88933, Kadipaten: 59748, Garut: 102032, Pabrik: 154153, Sukamanah: 168319});
+    g.addVertex('Garut', {Indramayu: 102032, Kadipaten: 63329, Cirebon: 95955, Pabrik: 46476, Sukamanah: 110648});
+    g.addVertex('Sukamanah', {Indramayu: 168319, Garut: 110648, Pabrik: 76749, Cianjur: 14143, Cibitung: 85405});
+    g.addVertex('Cianjur', {Pabrik: 82835, Sukamanah: 14143, Cibitung: 123669, Kranji: 109192});
+    g.addVertex('Cibitung', {Kranji: 18628, Cakung: 32688, Cianjur: 123669, Bintara: 22855, Sukamanah: 85405});
+    g.addVertex('Kranji', {Bintara: 2049, Handoyo: 12220, CileungsiIndah: 25442, Cianjur: 109192, Cakung: 13811, Cibitung: 18628});
+    g.addVertex('Bintara', {Tebet: 12273, Jatikramat: 11452, Handoyo: 13656, Kranji: 2049, Cakung: 13086, TanjungPriok: 26699, Bintara: 22855, CileungsiIndah: 37124});
     g.addVertex('Cakung', {Kranji: 13811, Bintara: 13086, Tebet: 18366, TanjungPriok: 23057, Cibitung: 32688});
-    g.addVertex('TanjungPriok', {Tebet: 21569, Bintara: 26699, Cakung: 13811});
-    g.addVertex('Tebet', {Jatikramat: 17602, TanjungPriok: 23057, Cakung: 13811, Bintara: 13086});
-    g.addVertex('Jatikramat', {Jatijajar: 26886, Cilodong: 29325, Handoyo: 7311, Bintara: 13086 , Tebet: 18366});
-    g.addVertex('Handoyo', {Jatijajar: 31805, CileungsiIndah: 13222, Jatikramat: 17602, Kranji: 13811, Bintara: 13086});
-    g.addVertex('CileungsiIndah', {Jatijajar: 18831, DarnoBogor: 6447, Kranji: 13811, Handoyo: 7311});
-    g.addVertex('Jatijajar', {Cilodong: 5778, DarnoBogor: 12709, Cibinong: 9201, Jatikramat: 10263, Handoyo: 8339, CileungsiIndah: 13222});
-    g.addVertex('Cilodong', {DarnoBogor: 12709, Cibinong: 9201, Cikaret: 10611, Jatikramat: 10263, Jatijajar: 31805});
-    g.addVertex('DarnoBogor', {Cibinong: 20108, Babakanmadang: 24522, Jatijajar: 31805, CileungsiIndah: 13222, Cilodong: 5778});
-    g.addVertex('Cikaret', {Citayam: 8118, Cilodong: 5778, Cibinong: 16519});
-    g.addVertex('Cibinong', {Cikaret: 3262, Citayam: 8950, Karadenan: 11006, Babakanmadang: 16519, Cilodong: 5778, DarnoBogor: 12709, Jatijajar: 31805});
-    g.addVertex('Citayam', {Karadenan: 8339, Cikaret: 3262, Cibinong: 20108});
-    g.addVertex('Karadenan', {Babakanmadang: 12102, Citayam: 8118, Cibinong: 16519});
+    g.addVertex('TanjungPriok', {Tebet: 21569, Bintara: 26699, Cakung: 23057});
+    g.addVertex('Tebet', {Jatikramat: 17602, TanjungPriok: 21569, Cakung: 18366, Bintara: 12273, Handoyo: 23983});
+    g.addVertex('Jatikramat', {Jatijajar: 26886, Cilodong: 29325, Handoyo: 7311, Bintara: 11452 , Tebet: 17602});
+    g.addVertex('Handoyo', {Jatijajar: 31805, CileungsiIndah: 13222, Jatikramat: 7311, Kranji: 12220, Bintara: 13656, Tebet: 23983});
+    g.addVertex('CileungsiIndah', {Handoyo: 13222, Kranji: 25442, Jatijajar: 18831, DarnoBogor: 6447});
+    g.addVertex('Jatijajar', {Cilodong: 5778, DarnoBogor: 12709, Cibinong: 9201, Jatikramat: 26886, Handoyo: 31805, CileungsiIndah: 18831});
+    g.addVertex('Cilodong', {DarnoBogor: 12709, Cibinong: 9201, Cikaret: 10611, Jatikramat: 29325, Jatijajar: 5778});
+    g.addVertex('DarnoBogor', {Cibinong: 20108, Babakanmadang: 24522, Jatijajar: 12709, CileungsiIndah: 6447, Cilodong: 12709});
+    g.addVertex('Cikaret', {Citayam: 8118, Cilodong: 10611, Cibinong: 3262});
+    g.addVertex('Cibinong', {Cikaret: 3262, Citayam: 8950, Karadenan: 11006, Babakanmadang: 16519, Cilodong: 9201, DarnoBogor: 20108, Jatijajar: 9201});
+    g.addVertex('Citayam', {Karadenan: 8339, Cikaret: 8118, Cibinong: 8950});
+    g.addVertex('Karadenan', {Babakanmadang: 12102, Citayam: 8339, Cibinong: 11006});
     g.addVertex('Babakanmadang', {Karadenan: 12102, Cibinong: 16519, DarnoBogor: 24522});
     
     // Log test, with the addition of reversing the path and prepending the first node so it's more readable
     // console.log(o,g);
     // console.log(g.shortestPath(o, d).concat([o]).reverse());
     var hasil = g.shortestPath(o, d).concat([o]).reverse();
-    
-    document.getElementById("lblPath").innerHTML = "jalur terdekat:" + hasil;
+
+    document.getElementById("namarute").innerHTML = o + " - " + d;
+    document.getElementById("lblPath").innerHTML = hasil;
     allDestination = hasil
 
   if (o == "Pabrik")
     {
         document.getElementById("org").innerHTML = "-7.013085699999999,107.6455816";
+    }
+    else if (o == "Cirebon")
+    {
+        document.getElementById("org").innerHTML = "-6.7694068,108.4151094";
+    }
+    else if (o == "Tegal")
+    {
+        document.getElementById("org").innerHTML = "-6.8943209,109.126391";
+    }
+    else if (o == "Indramayu")
+    {
+        document.getElementById("org").innerHTML = "-6.463400099999999,107.9390577";
+    }
+    else if (o == "Majalengka")
+    {
+        document.getElementById("org").innerHTML = "-6.832135999999999,108.249757";
+    }
+    else if (o == "Kadipaten")
+    {
+        document.getElementById("org").innerHTML = "-6.769392,108.167688";
+    }
+    else if (o == "Brebes")
+    {
+        document.getElementById("org").innerHTML = "-6.8693922,109.0374386";
+    }
+    else if (o == "Cianjur")
+    {
+        document.getElementById("org").innerHTML = "-6.838547500000001,107.1295158";
+    }
+    else if (o == "Sukamanah")
+    {
+        document.getElementById("org").innerHTML = "-6.7760991,107.1849001";
+    }
+    else if (o == "Garut")
+    {
+        document.getElementById("org").innerHTML = "-7.035972500000001,107.9794819";
     }
     else if (o == "Cibitung")
     {
@@ -288,6 +376,42 @@
    if (d == "Pabrik")
     {
         document.getElementById("dest").innerHTML = "-7.013085699999999,107.6455816";
+    }
+    else if (d == "Cirebon")
+    {
+        document.getElementById("dest").innerHTML = "-6.7694068,108.4151094";
+    }
+    else if (d == "Tegal")
+    {
+        document.getElementById("dest").innerHTML = "-6.8943209,109.126391";
+    }
+    else if (d == "Indramayu")
+    {
+        document.getElementById("dest").innerHTML = "-6.463400099999999,107.9390577";
+    }
+    else if (d == "Majalengka")
+    {
+        document.getElementById("dest").innerHTML = "-6.832135999999999,108.249757";
+    }
+    else if (d == "Kadipaten")
+    {
+        document.getElementById("dest").innerHTML = "-6.769392,108.167688";
+    }
+    else if (d == "Brebes")
+    {
+        document.getElementById("dest").innerHTML = "-6.8693922,109.0374386";
+    }
+    else if (d == "Cianjur")
+    {
+        document.getElementById("dest").innerHTML = "-6.838547500000001,107.1295158";
+    }
+    else if (d == "Sukamanah")
+    {
+        document.getElementById("dest").innerHTML = "-6.7760991,107.1849001";
+    }
+    else if (d == "Garut")
+    {
+        document.getElementById("dest").innerHTML = "-7.035972500000001,107.9794819";
     }
     else if (d == "Cibitung")
     {
@@ -390,6 +514,34 @@
     //   document.getElementById('end').addEventListener('change', onChangeHandler);
     }
 
+    // function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    //         var latlong = <?php echo json_encode( $dt ); ?>;
+
+    //         // console.log(latlong);
+    //         var waypoints = [];
+    //         for( i in latlong ) {
+    //             console.log(latlong[i]['dt']['Latitude']);
+    //             // waypoints.push({
+    //             //     location: new google.maps.LatLng(latlong[i]['cabangs']['Latitude'],latlong[i]['cabangs']['Longitude']),
+    //             //     stopover: true
+    //             // });
+    //         }
+    //             var originA = document.getElementById('lat-1').value + "," + document.getElementById('long-1').value;
+    //             var destinationA = document.getElementById('lat-4').value + "," + document.getElementById('long-4').value;
+    //         directionsService.route({
+    //             origin: originA,
+    //             destination: originA,
+    //             waypoints: waypoints,
+    //             optimizeWaypoints: true,
+    //             travelMode: 'DRIVING'
+    //         }, function(response, status) {
+    //             if (status === 'OK') {
+    //                 directionsDisplay.setDirections(response);
+    //             } else {
+    //                 window.alert('Directions request failed due to ' + status);
+    //             }
+    //         });
+    //     }
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var getlatlogORG = document.getElementById("org").innerHTML;
         var latLngORG =  getlatlogORG.split(",");
@@ -419,6 +571,51 @@
                 if (items[i] == "Pabrik")
                 {
                     items[i] = "-7.013085699999999,107.6455816";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Cirebon")
+                {
+                    items[i] = "-6.7694068,108.4151094";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Tegal")
+                {
+                    items[i] = "-6.8943209,109.126391";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Indramayu")
+                {
+                    items[i] = "-6.463400099999999,107.9390577";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Majalengka")
+                {
+                    items[i] = "-6.832135999999999,108.249757";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Kadipaten")
+                {
+                    items[i] = "-6.769392,108.167688";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Brebes")
+                {
+                    items[i] = "-6.8693922,109.0374386";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Cianjur")
+                {
+                    items[i] = "-6.838547500000001,107.1295158";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Sukamanah")
+                {
+                    items[i] = "-6.7760991,107.1849001";
+                    console.log(items[i]);
+                }
+                else if (items[i] == "Garut")
+                {
+                    items[i] = "-7.035972500000001,107.9794819";
                     console.log(items[i]);
                 }
                 else if (items[i] == "Cibitung")
@@ -541,16 +738,45 @@
     var totalDist = 0;
     var totalTime = 0;
     var myroute = result.routes[0];
+    // totalDist = distances.text;
+    // totalTime = duration.text
     console.log(myroute);
     for (i = 0; i < myroute.legs.length; i++) {
         totalDist += myroute.legs[i].distance.value;
         totalTime += myroute.legs[i].duration.value;
         
-    console.log( myroute.legs[i].duration.value);
+    console.log( myroute.legs[i].duration.text);
     }
-    totalDist = totalDist / 1000.
-    document.getElementById("dvDistance").innerHTML = "total distance is: " + totalDist + " km<br>total time is: " + (totalTime / 60).toFixed(2) + " minutes";
+    totalDist = totalDist / 1000;
+    // totalTime = totalTime / 60.toFixed(2);
+    // totaljarak = myroute.legs[1].distance.text;
+    // totalwaktu = myroute.legs[1].duration.text;
+    // document.getElementById("dvDistance").innerHTML = "total distance is: " + totalDist + " km<br>total time is: " + (totalTime / 60).toFixed(2) + " minutes";
+    
+    d = Number(totalTime);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+
+    document.getElementById("dvDistance").innerHTML = totalDist + " Km";
+    document.getElementById("dvDuration").innerHTML = hDisplay + mDisplay;
     }
+
+    // function secondsToHms(d) {
+    //     d = Number(d);
+    //     var h = Math.floor(d / 3600);
+    //     var m = Math.floor(d % 3600 / 60);
+    //     var s = Math.floor(d % 3600 % 60);
+
+    //     var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    //     var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    //     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    //     return hDisplay + mDisplay + sDisplay; 
+    // }
     
 </script>
 @stop

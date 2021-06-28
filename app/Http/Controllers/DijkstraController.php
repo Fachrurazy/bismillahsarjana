@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cabang;
 use App\Dijkstra;
 use App\Estimation;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class DijkstraController extends Controller
     public function index()
     {
         $datas = Dijkstra::all();
-        return view('dijkstra.index', compact('datas'));
+        $dt = Cabang::all();
+        return view('dijkstra.index', compact('datas','dt'));
     }
 
     /**
