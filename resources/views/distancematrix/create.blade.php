@@ -18,6 +18,7 @@
                                 <div class="col-sm">
                                     <div class="card-body"><a><b>Kode Origin</b></a><br>
                                         <select name="Kode_Origin" id="Kode_Origin">
+                                            <option>Pilih Origin</option>
                                             @foreach ($datas as $item)
                                                 <option value="{{ $item->id }}">{{ $item->Kode_Cabang }} -
                                                     {{ $item->Nama_Cabang }}</option>
@@ -51,6 +52,7 @@
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Kode Destination</b></a><br>
                                     <select name="Kode_Destination" id="Kode_Destination">
+                                        <option>Pilih Destination</option>
                                         @foreach ($datas as $item)
                                             <option value="{{ $item->id }}">{{ $item->Kode_Cabang }} -
                                                 {{ $item->Nama_Cabang }}</option>
@@ -65,17 +67,17 @@
                             </div>
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Alamat</b></a><br>
-                                    <input type="text" name="destination" id="destination">
+                                    <input type="text" name="destination" id="destination" readonly>
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Latitude</b></a><br>
-                                    <input type="text" name="lat2" id="lat2">
+                                    <input type="text" name="lat2" id="lat2" readonly>
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Longitude</b></a><br>
-                                    <input type="text" name="long2" id="long2">
+                                    <input type="text" name="long2" id="long2" readonly>
                                 </div>
                             </div>
                         </div>

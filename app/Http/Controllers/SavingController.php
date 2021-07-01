@@ -27,6 +27,7 @@ class SavingController extends Controller
             ON svm.Kode_Destination = c2.id;
             ")
         );
+        sort($datas);
         return view('saving.index', compact('datas'));
     }
 
@@ -39,7 +40,7 @@ class SavingController extends Controller
     {
         $datas = DB::select(
             DB::raw("
-            select dm.id, c1.Kode_Cabang AS Kode_Origin, c2.Kode_Cabang AS Kode_Destination, dm.Distance
+            select dm.id, c1.Kode_Cabang AS Kode_Origin, c1.Nama_cabang AS Cabang1, c2.Kode_Cabang AS Kode_Destination, c2.Nama_Cabang AS Cabang2, dm.Distance
             FROM matrixjarak dm
             INNER JOIN cabang c1
             ON dm.Kode_Origin = c1.id
@@ -47,6 +48,7 @@ class SavingController extends Controller
             ON dm.Kode_Destination = c2.id;
             ")
         );
+        sort($datas);
         return view('saving.create', compact('datas'));
     }
     

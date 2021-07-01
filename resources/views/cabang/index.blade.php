@@ -32,6 +32,7 @@
                             .pac-container {z-index: 1055 !important;}
                         </style>
                         <input type="hidden" id="id" name="id">
+                        <input type="hidden" id="kode_cabang" name="Kode_Cabang">
                         <div class="form-group">
                             <label for="exampleInput">Nama Cabang</label>
                             <input type="text" class="form-control" id="nama_cabang" name="Nama_Cabang"
@@ -106,7 +107,7 @@
                                         <td>{{ $cabang['Latitude'] }}</td>
                                         <td>{{ $cabang['Longitude'] }}</td>
                                         <td>
-                                            <a data-id="{{ $cabang['id'] }}" data-Nama_Cabang="{{ $cabang['Nama_Cabang'] }}"
+                                            <a data-id="{{ $cabang['id'] }}" data-Kode_Cabang="{{ $cabang['Kode_Cabang'] }}" data-Nama_Cabang="{{ $cabang['Nama_Cabang'] }}"
                                                     data-pemilik="{{ $cabang['Pemilik'] }}"
                                                     data-telepon="{{ $cabang['Telepon'] }}"
                                                     data-alamat="{{ $cabang['Alamat'] }}"
@@ -198,6 +199,7 @@
 
         var button = $(event.relatedTarget)
         var id = button.data('id')
+        var kode_cabang = button.data('kode_cabang')
         var nama_cabang = button.data('nama_cabang')
         var pemilik = button.data('pemilik')
         var telepon = button.data('telepon')
@@ -208,6 +210,7 @@
         var modal = $(this)
         modal.find('.modal-title').text('EDIT DATA CABANG');
         modal.find('.modal-body #id').val(id);
+        modal.find('.modal-body #kode_cabang').val(kode_cabang);
         modal.find('.modal-body #nama_cabang').val(nama_cabang);
         modal.find('.modal-body #pemilik').val(pemilik);
         modal.find('.modal-body #telepon').val(telepon);

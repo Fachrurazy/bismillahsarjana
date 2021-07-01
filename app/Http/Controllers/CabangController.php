@@ -121,7 +121,7 @@ class CabangController extends Controller
         ]);
 
         $cabang = array(
-            'Kode_Cabang' => $request->Nama_Cabang,
+            'Kode_Cabang' => $request->Kode_Cabang,
             'Nama_Cabang' => $request->Nama_Cabang,
             'Pemilik' => $request->Pemilik,
             'Telepon' => $request->Telepon,
@@ -129,7 +129,7 @@ class CabangController extends Controller
             'Latitude' => $request->Latitude,
             'Longitude' => $request->Longitude,
         );
-        // print_r($cabang);
+        // return $cabang;die();
         Cabang::findorfail($request->id)->update($cabang);
         return redirect()->route('cabang.index')->with('success', 'Data berhasil diupdate');
     }

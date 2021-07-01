@@ -167,6 +167,100 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <!-- Latest Order -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header border-transparent">
+                    <h3 class="card-title">Latest Orders</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Invoice</th>
+                                    <th>Tanggal</th>
+                                    <th>Created at</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- @foreach ($inv as $i => $invoice)
+                                    <tr>
+                                        <td>{{ $i + 1 }}</td>
+                                        <td><a
+                                                href="{{ route('transaction.show', $invoice->id) }}">{{ $invoice['invoice'] }}</a>
+                                        </td>
+                                        <td><span class="badge badge-success">{{ $invoice['tanggal'] }}</span></td>
+                                        <td><span class="badge badge-warning">{{ $invoice['created_at'] }}</span></td>
+                                    </tr>
+                                @endforeach --}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.card-body -->
+                {{-- <div class="card-footer clearfix">
+                    <a href="{{ route('transaction.index') }}" class="btn btn-sm btn-primary float-left">Pembelian</a>
+                    <a href="{{ route('transactionout.index') }}"
+                        class="btn btn-sm btn-danger float-right">Penjualan</a>
+                </div> --}}
+                <!-- /.card-footer -->
+            </div>
+        </div>
+
+        <!-- PRODUK -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="card-title">Products</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped table-valign-middle">
+                        <thead>
+                            <tr>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Sub Golongan</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{-- @foreach ($barang as $barangs)
+                                <tr>
+                                    <td>{{ $barangs['kd_brg'] }}</td>
+                                    <td>{{ $barangs['nama_barang'] }}</td>
+                                    <td>{{ $barangs['sub_golongan'] }}</td>
+                                    <td>{{ $barangs['qty'] }}</td>
+                                </tr> --}}
+                            {{-- @endforeach --}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 @stop
 

@@ -22,7 +22,7 @@
                         <table id="datakoordinat" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Kode Origin</th>
                                     <th>Kode Destination</th>
                                     <th>Saving List</th>
@@ -30,9 +30,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $no = 1;   
+                                @endphp
                                 @foreach ($datas as $saving)
                                     <tr>
-                                        <td>{{ $saving->id }}</td>
+                                        <td>{{ $no }}</td>
                                         <td>{{ $saving->Kode_Origin }}</td>
                                         <td>{{ $saving->Kode_Destination }}</td>
                                         <td>{{ $saving->Saving }}</td>
@@ -54,6 +57,9 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    @php
+                                    $no++;
+                                @endphp
                                 @endforeach
                             </tbody>
                         </table>

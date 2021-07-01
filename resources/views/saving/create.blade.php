@@ -27,13 +27,20 @@
                 <div class="card">
                     <form action="{{route('saving.store')}}" method="post">
                         {{ csrf_field() }}
+                        @php
+                            $no1 = 1;   
+                        @endphp
                         <div class="row">
                                 <div class="col-sm">
                                     <div class="card-body"><a><b>Rincian Depot ke Destinasi 1</b></a><br>
                                         <select name="doi" id="doi">
+                                            <option>Pilih Depot ke Destinasi 1</option>
                                             @foreach ($datas as $item)
-                                                <option value="{{ $item->id }}">{{ $item->id }} -
-                                                    ({{ $item->Kode_Origin }} - {{ $item->Kode_Destination }})</option>
+                                                <option value="{{ $item->id }}">{{ $no1 }} -
+                                                    ({{ $item->Kode_Origin }} - {{ $item->Cabang1 }} | {{ $item->Kode_Destination }} - {{ $item->Cabang2 }})</option>
+                                                @php
+                                                    $no1++;
+                                                @endphp        
                                             @endforeach
                                         </select>
                                     </div>
@@ -54,13 +61,20 @@
                                     </div>
                                 </div>
                         </div>
+                        @php
+                            $no2 = 1;   
+                        @endphp
                         <div class="row">
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Rincian Depot ke Destinasi 2</b></a><br>
                                     <select name="doj" id="doj">
+                                        <option>Pilih Depot ke Destinasi 2</option>
                                         @foreach ($datas as $item)
-                                        <option value="{{ $item->id }}">{{ $item->id }} -
-                                            ({{ $item->Kode_Origin }} - {{ $item->Kode_Destination }})</option>
+                                        <option value="{{ $item->id }}">{{ $no2 }} -
+                                            ({{ $item->Kode_Origin }} - {{ $item->Cabang1 }} | {{ $item->Kode_Destination }} - {{ $item->Cabang2 }})</option>
+                                        @php
+                                            $no2++;
+                                        @endphp
                                         @endforeach
                                     </select>
                                 </div>
@@ -81,13 +95,20 @@
                                 </div>
                             </div>
                         </div>
+                        @php
+                            $no3 = 1;   
+                        @endphp
                         <div class="row">
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Rincian Destinasi 1 ke Destinasi 2</b></a><br>
                                     <select name="dij" id="dij">
+                                        <option>Pilih Destinasi 1 ke Destinasi 2</option>
                                         @foreach ($datas as $item)
-                                        <option value="{{ $item->id }}">{{ $item->id }} -
-                                            ({{ $item->Kode_Origin }} - {{ $item->Kode_Destination }})</option>
+                                        <option value="{{ $item->id }}">{{ $no3 }} -
+                                            ({{ $item->Kode_Origin }} - {{ $item->Cabang1 }} | {{ $item->Kode_Destination }} - {{ $item->Cabang2 }})</option>
+                                        @php
+                                            $no3++;
+                                        @endphp
                                         @endforeach
                                     </select>
                                 </div>

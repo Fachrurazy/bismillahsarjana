@@ -22,7 +22,7 @@
                         <table id="datakoordinat" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Kode Origin</th>
                                     <th>Kode Destination</th>
                                     <th>Distance</th>
@@ -30,9 +30,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $no = 1;   
+                                @endphp
                                 @foreach ($datas as $cabang)
                                     <tr>
-                                        <td>{{ $cabang->id }}</td>
+                                        <td>{{ $no }}</td>
                                         <td>{{ $cabang->Kode_Origin }}</td>
                                         <td>{{ $cabang->Kode_Destination }}</td>
                                         <td>{{ $cabang->Distance }} KM</td>
@@ -54,6 +57,9 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    @php
+                                    $no++;
+                                @endphp
                                 @endforeach
                             </tbody>
                         </table>

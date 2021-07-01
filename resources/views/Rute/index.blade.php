@@ -22,15 +22,18 @@
                         <table id="datakoordinat" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Kelompok</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
+                            @php
+                                $no = 1;   
+                            @endphp
                             <tbody>
                                 @foreach ($datas as $rute)
                                     <tr>
-                                        <td>{{ $rute['id'] }}</td>
+                                        <td>{{ $no }}</td>
                                         <td>{{ $rute['Kelompok'] }}</td>
                                         <td><a type="button" class="btn btn-warning" href="{{route('rute.show', $rute->id)}}">Show</a>
                                             <form method="POST" action="{{ route('rute.destroy', $rute->id) }}"
@@ -43,6 +46,9 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    @php
+                                    $no++;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>

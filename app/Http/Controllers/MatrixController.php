@@ -27,6 +27,7 @@ class MatrixController extends Controller
             ON dm.Kode_Destination = c2.id;
             ")
         );
+        sort($datas);
         return view('distancematrix.index', compact('datas'));
     }
 
