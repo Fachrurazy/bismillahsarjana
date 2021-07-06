@@ -226,8 +226,34 @@
     // g.addVertex('Citayam', {Cikaret: 8118, Cilodong: 10263, Karadenan: 8339});
     // g.addVertex('Karadenan', {Cikaret: 1081, Citayam: 8339, Babakanmadang: 12102});
     // g.addVertex('Babakanmadang', {Karadenan: 12102, Jatijajar: 22707});
-
-    g.addVertex('Pabrik', {Cianjur: 82835, Sukamanah: 76749, Indramayu: 154153, Garut: 46476});
+    // g.addVertex('Pabrik', {Cianjur: 82835, Sukamanah: 76749, Indramayu: 154153, Garut: 46476});
+    // g.addVertex('Tegal', {Majalengka: 126801, Brebes: 12116});
+    // g.addVertex('Majalengka', {Tegal: 126801, Brebes: 118629, Cirebon: 22190, Kadipaten: 13319});
+    // g.addVertex('Brebes', {Majalengka: 118629, Cirebon: 94045, Kadipaten: 124620, Tegal: 12116});
+    // g.addVertex('Kadipaten', {Majalengka: 13319, Brebes: 124620, Cirebon: 34985, Garut: 63329, Indramayu: 59748});
+    // g.addVertex('Cirebon', {Kadipaten: 34985, Brebes: 94045, Indramayu: 88933, Garut: 95955, Majalengka: 22190});
+    // g.addVertex('Indramayu', {Cirebon: 88933, Kadipaten: 59748, Garut: 102032, Pabrik: 154153, Sukamanah: 168319});
+    // g.addVertex('Garut', {Indramayu: 102032, Kadipaten: 63329, Cirebon: 95955, Pabrik: 46476, Sukamanah: 110648});
+    // g.addVertex('Sukamanah', {Indramayu: 168319, Garut: 110648, Pabrik: 76749, Cianjur: 14143, Cibitung: 85405});
+    // g.addVertex('Cianjur', {Pabrik: 82835, Sukamanah: 14143, Cibitung: 123669, Kranji: 109192});
+    // g.addVertex('Cibitung', {Kranji: 18628, Cakung: 32688, Cianjur: 123669, Bintara: 22855, Sukamanah: 85405});
+    // g.addVertex('Kranji', {Bintara: 2049, Handoyo: 12220, CileungsiIndah: 25442, Cianjur: 109192, Cakung: 13811, Cibitung: 18628});
+    // g.addVertex('Bintara', {Tebet: 12273, Jatikramat: 11452, Handoyo: 13656, Kranji: 2049, Cakung: 13086, TanjungPriok: 26699, Bintara: 22855, CileungsiIndah: 37124});
+    // g.addVertex('Cakung', {Kranji: 13811, Bintara: 13086, Tebet: 18366, TanjungPriok: 23057, Cibitung: 32688});
+    // g.addVertex('TanjungPriok', {Tebet: 21569, Bintara: 26699, Cakung: 23057});
+    // g.addVertex('Tebet', {Jatikramat: 17602, TanjungPriok: 21569, Cakung: 18366, Bintara: 12273, Handoyo: 23983});
+    // g.addVertex('Jatikramat', {Jatijajar: 26886, Cilodong: 29325, Handoyo: 7311, Bintara: 11452 , Tebet: 17602});
+    // g.addVertex('Handoyo', {Jatijajar: 31805, CileungsiIndah: 13222, Jatikramat: 7311, Kranji: 12220, Bintara: 13656, Tebet: 23983});
+    // g.addVertex('CileungsiIndah', {Handoyo: 13222, Kranji: 25442, Jatijajar: 18831, DarnoBogor: 6447});
+    // g.addVertex('Jatijajar', {Cilodong: 5778, DarnoBogor: 12709, Cibinong: 9201, Jatikramat: 26886, Handoyo: 31805, CileungsiIndah: 18831});
+    // g.addVertex('Cilodong', {DarnoBogor: 12709, Cibinong: 9201, Cikaret: 10611, Jatikramat: 29325, Jatijajar: 5778});
+    // g.addVertex('DarnoBogor', {Cibinong: 20108, Babakanmadang: 24522, Jatijajar: 12709, CileungsiIndah: 6447, Cilodong: 12709});
+    // g.addVertex('Cikaret', {Citayam: 8118, Cilodong: 10611, Cibinong: 3262});
+    // g.addVertex('Cibinong', {Cikaret: 3262, Citayam: 8950, Karadenan: 11006, Babakanmadang: 16519, Cilodong: 9201, DarnoBogor: 20108, Jatijajar: 9201});
+    // g.addVertex('Citayam', {Karadenan: 8339, Cikaret: 8118, Cibinong: 8950});
+    // g.addVertex('Karadenan', {Babakanmadang: 12102, Citayam: 8339, Cibinong: 11006});
+    // g.addVertex('Babakanmadang', {Karadenan: 12102, Cibinong: 16519, DarnoBogor: 24522});
+    g.addVertex('Pabrik', {Cianjur: 80699, Sukamanah: 74677, Indramayu: 154153, Garut: 46476, Cibitung: 136040});
     g.addVertex('Tegal', {Majalengka: 126801, Brebes: 12116});
     g.addVertex('Majalengka', {Tegal: 126801, Brebes: 118629, Cirebon: 22190, Kadipaten: 13319});
     g.addVertex('Brebes', {Majalengka: 118629, Cirebon: 94045, Kadipaten: 124620, Tegal: 12116});
@@ -235,11 +261,11 @@
     g.addVertex('Cirebon', {Kadipaten: 34985, Brebes: 94045, Indramayu: 88933, Garut: 95955, Majalengka: 22190});
     g.addVertex('Indramayu', {Cirebon: 88933, Kadipaten: 59748, Garut: 102032, Pabrik: 154153, Sukamanah: 168319});
     g.addVertex('Garut', {Indramayu: 102032, Kadipaten: 63329, Cirebon: 95955, Pabrik: 46476, Sukamanah: 110648});
-    g.addVertex('Sukamanah', {Indramayu: 168319, Garut: 110648, Pabrik: 76749, Cianjur: 14143, Cibitung: 85405});
-    g.addVertex('Cianjur', {Pabrik: 82835, Sukamanah: 14143, Cibitung: 123669, Kranji: 109192});
-    g.addVertex('Cibitung', {Kranji: 18628, Cakung: 32688, Cianjur: 123669, Bintara: 22855, Sukamanah: 85405});
+    g.addVertex('Sukamanah', {Cibitung: 91292, Indramayu: 168319, Garut: 110648, Pabrik: 74677, Cianjur: 9830});
+    g.addVertex('Cianjur', {Pabrik: 80699, Sukamanah: 9830, Cibitung: 123669, Kranji: 109192});
+    g.addVertex('Cibitung', {Sukamanah: 91292, Kranji: 18628, Cakung: 32688, Cianjur: 123669, Pabrik: 136040});
     g.addVertex('Kranji', {Bintara: 2049, Handoyo: 12220, CileungsiIndah: 25442, Cianjur: 109192, Cakung: 13811, Cibitung: 18628});
-    g.addVertex('Bintara', {Tebet: 12273, Jatikramat: 11452, Handoyo: 13656, Kranji: 2049, Cakung: 13086, TanjungPriok: 26699, Bintara: 22855, CileungsiIndah: 37124});
+    g.addVertex('Bintara', {Tebet: 12273, Jatikramat: 11452, Handoyo: 13656, Kranji: 2049, Cakung: 13086, TanjungPriok: 30834, CileungsiIndah: 37124});
     g.addVertex('Cakung', {Kranji: 13811, Bintara: 13086, Tebet: 18366, TanjungPriok: 23057, Cibitung: 32688});
     g.addVertex('TanjungPriok', {Tebet: 21569, Bintara: 26699, Cakung: 23057});
     g.addVertex('Tebet', {Jatikramat: 17602, TanjungPriok: 21569, Cakung: 18366, Bintara: 12273, Handoyo: 23983});
@@ -745,7 +771,7 @@
         totalDist += myroute.legs[i].distance.value;
         totalTime += myroute.legs[i].duration.value;
         
-    console.log( myroute.legs[i].duration.text);
+    console.log( myroute.legs[i].distance.value);
     }
     totalDist = totalDist / 1000;
     // totalTime = totalTime / 60.toFixed(2);
@@ -762,7 +788,7 @@
     var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes ") : "";
     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
 
-    document.getElementById("dvDistance").innerHTML = totalDist + " Km";
+    document.getElementById("dvDistance").innerHTML = totalDist.toFixed(1) + " Km";
     document.getElementById("dvDuration").innerHTML = hDisplay + mDisplay;
     }
 
