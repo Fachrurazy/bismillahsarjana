@@ -24,40 +24,36 @@
                         <div class="box-body">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <div class="col-md-4">
-                                        <div class="card-body">
-                                            <i class="fa fa-truck"></i>
-                                            <label for="exampleInputEmail1">KELOMPOK</label>
-                                            <input type="text" readonly class="form-control float-right" name="kelompok"
-                                                value="{{ $dt->Kelompok }}">
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <table id="tableTransaction" class="table table-bordered table-striped">
+                                        <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Kode_Cabang</th>
+                                                    <th>Kode Cabang</th>
+                                                    <th>Nama Cabang</th>
                                                     <th>Alamat</th>
                                                     <th>Latitude</th>
                                                     <th>Longitude</th>
                                                 </tr>
                                             </thead>
                                             @php
-                                                $no = 1;   
+                                                $no = 1;
                                             @endphp
                                             <tbody>
                                                 @foreach ($dt->getdetail as $show)
                                                     <tr>
                                                         <td>{{ $show->cabangs->Kode_Cabang }}</td>
+                                                        <td>{{ $show->cabangs->Nama_Cabang }}</td>
                                                         <td>{{ $show->cabangs->Alamat }}</td>
                                                         <td>{{ $show->cabangs->Latitude }}</td>
                                                         <td>{{ $show->cabangs->Longitude }}</td>
-                                                        <input type="hidden" value="{{ $show->cabangs->Latitude }}" id="lat-{{ $no }}" readonly>
-                                                        <input type="hidden" value="{{ $show->cabangs->Longitude }}" id="long-{{ $no }}" readonly>
+                                                        <input type="hidden" value="{{ $show->cabangs->Latitude }}"
+                                                            id="lat-{{ $no }}" readonly>
+                                                        <input type="hidden" value="{{ $show->cabangs->Longitude }}"
+                                                            id="long-{{ $no }}" readonly>
                                                     </tr>
-                                                    
+
                                                     @php
                                                         $no++;
                                                     @endphp
@@ -72,28 +68,57 @@
                     <div class="box-header">
                         <h2> Euclidean Distance </h2>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                        <table>
-                            @php
-                                $jml = 1;   
-                            @endphp
-                            @foreach ($result as $item)
-                                <tr>
-                                    <td>{{$cabang[$jml-1]['kc']}}</td>
-                                    <td>{{ $item }}</td>
-                                </tr>
-                                @php
-                                    $jml++;
-                                @endphp
-                            @endforeach
-                            
-                        </table>
-                    </div>
-                        <div class="col-12">
-                            <button type="submit" id="inputbtn" class="btn btn-info">show polyline</button>
-                        </div>
-                    </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Tujuan Rute</th>
+                                                        <td scope="col"> {{ $dt->Kelompok }}</td>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $jml = 1;
+                                                @endphp
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="col">Total Jarak</th>
+                                                        <td scope="col" id="dvDistance"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Total Waktu</th>
+                                                        <td scope="col" id="dvDuration"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Biaya Bahan Bakar</th>
+                                                        <td scope="col" id="dvEst"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Rute</th>
+                                                        <td scope="col" id="lbl">
+                                                            @foreach ($result as $item)
+                                                                ({{ $cabang[$jml - 1]['kc'] }} - {{ $item }})
+                                                                @php
+                                                                    $jml++;
+                                                                @endphp
+                                                            @endforeach
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Action</th>
+                                                        <td scope="col"><button type="submit" id="inputbtn" class="btn btn-info">show polyline</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- /.card-body -->
+                                        </div>
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
                 </div>
             </div>
     </section>
@@ -111,7 +136,7 @@
         </div>
     </div>
 
-    
+
 @endsection
 
 @section('css')
@@ -158,19 +183,22 @@
         }
 
         function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-            var latlong = <?php echo json_encode( $dt->getdetail ); ?>;
+            var latlong = <?php echo json_encode($dt->getdetail); ?>;
 
             // console.log(latlong);
+
             var waypoints = [];
-            for( i in latlong ) {
+            for (i in latlong) {
                 // console.log(latlong[i]['cabangs']['Latitude']);
                 waypoints.push({
-                    location: new google.maps.LatLng(latlong[i]['cabangs']['Latitude'],latlong[i]['cabangs']['Longitude']),
+                    location: new google.maps.LatLng(latlong[i]['cabangs']['Latitude'], latlong[i]['cabangs'][
+                        'Longitude'
+                    ]),
                     stopover: true
                 });
             }
-                var originA = document.getElementById('lat-1').value + "," + document.getElementById('long-1').value;
-                var destinationA = document.getElementById('lat-4').value + "," + document.getElementById('long-4').value;
+            var originA = document.getElementById('lat-1').value + "," + document.getElementById('long-1').value;
+            var destinationA = document.getElementById('lat-1').value + "," + document.getElementById('long-1').value;
             directionsService.route({
                 origin: originA,
                 destination: originA,
@@ -180,12 +208,39 @@
             }, function(response, status) {
                 if (status === 'OK') {
                     directionsDisplay.setDirections(response);
+                    computeTotalDistance(response)
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
             });
         }
 
+        function computeTotalDistance(result) {
+            var totalDist = 0;
+            var totalTime = 0;
+            var myroute = result.routes[0];
+            console.log(myroute);
+            for (i = 0; i < myroute.legs.length; i++) {
+                totalDist += myroute.legs[i].distance.value;
+                totalTime += myroute.legs[i].duration.value;
+
+                console.log(myroute.legs[i].duration.text);
+            }
+            DistKM = totalDist / 1000;
+
+            d = Number(totalTime);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes ") : "";
+            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+
+            document.getElementById("dvDistance").innerHTML = DistKM + " Km";
+            document.getElementById("dvDuration").innerHTML = hDisplay + mDisplay;
+            // document.getElementById("dvEst").innerHTML = hDisplay + mDisplay;
+        }
     </script>
 @endsection
 
@@ -198,7 +253,6 @@
             swal("Berhasil!", "{!! Session::get('success') !!}", "success", {
                 button: "OK",
             })
-
         </script>
     @endif
     @if (Session::has('error'))
@@ -210,7 +264,6 @@
                 showConfirmButton: false,
                 timer: 1500
             });
-
         </script>
         <?php Session::forget('error'); ?>
     @endif
@@ -225,7 +278,6 @@
             $('.preloader').fadeIn();
             location.reload();
         })
-
     </script>
 
 @endsection

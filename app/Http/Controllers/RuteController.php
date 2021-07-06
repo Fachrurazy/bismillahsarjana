@@ -70,19 +70,20 @@ class RuteController extends Controller
 
     public function store(Request $request)
     {
-            $getRow = Rute::orderBy('id', 'DESC')->get();
+            $getRow = Rute::orderBy('Kelompok', 'DESC')->get();
             $rowCount = $getRow->count();
             $lastId = $getRow->first();
             $kode="RUTE01";
 
             if($rowCount > 0){
-                if ($lastId->id < 9999){
-                    $kode = "RUTE0".''.($lastId->id + 1);
-                }else{
-                    $kode = "RUTE".''.($lastId->id + 1);
+                $strKode = substr($lastId->Kelompok, 4, 2);
+                if ($strKode <= 9){
+                    $kode = "RUTE0".''.($strKode + 1);
+                }elseif($strKode < 20){
+                    $kode = "RUTE1".''.($strKode + 1);
                 }
             }
-            
+            // return $kode;die();
             $cabang = $request->cabang;
             try{
             DB::transaction(function()use($cabang,$kode) {
@@ -138,7 +139,7 @@ class RuteController extends Controller
             $calc = sqrt(pow($calcLatAsalTujuan, 2) + pow($calcLonAsalTujuan, 2)) * $lingkarBumi;
             array_push($result, $calc);
         }
-        sort($result);
+        // sort($result);
         return view('rute.show', [
             'cabang' => $cabang, 
             'dt' => $dt,
