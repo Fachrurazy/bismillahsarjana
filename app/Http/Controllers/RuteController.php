@@ -123,7 +123,8 @@ class RuteController extends Controller
         for ($i=1; $i < count($dt->getdetail); $i++) { 
             array_push($cabang, 
             [
-                'kc' => $dt->getdetail[$i]->cabangs->Kode_Cabang, 
+                'kc' => $dt->getdetail[$i]->cabangs->Kode_Cabang,
+                'nc' => $dt->getdetail[$i]->cabangs->Nama_Cabang,
                 'lat' => $dt->getdetail[$i]->cabangs->Latitude, 
                 'long' => $dt->getdetail[$i]->cabangs->Longitude
             ]);

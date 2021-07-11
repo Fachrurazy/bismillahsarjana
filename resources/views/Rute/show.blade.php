@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="box-header">
-                        <h2> Euclidean Distance </h2>
+                        <h2> Rute Detail </h2>
                     </div>
                             <div class="row">
                                 <div class="col-12">
@@ -99,7 +99,7 @@
                                                         <th scope="row">Rute</th>
                                                         <td scope="col" id="lbl">
                                                             @foreach ($result as $item)
-                                                                ({{ $cabang[$jml - 1]['kc'] }} - {{ $item }})
+                                                                ({{ $cabang[$jml - 1]['kc'] }} {{ $cabang[$jml - 1]['nc'] }} - {{ $item }})
                                                                 @php
                                                                     $jml++;
                                                                 @endphp
@@ -227,6 +227,18 @@
                 console.log(myroute.legs[i].duration.text);
             }
             DistKM = totalDist / 1000;
+            calc = (DistKM.toFixed(1)/10)*9500;
+            var bilangan = Math.round(calc);
+	
+            var	number_string = bilangan.toString(),
+                sisa 	= number_string.length % 3,
+                rupiah 	= number_string.substr(0, sisa),
+                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+                    
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
 
             d = Number(totalTime);
             var h = Math.floor(d / 3600);
@@ -237,9 +249,9 @@
             var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes ") : "";
             var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
 
-            document.getElementById("dvDistance").innerHTML = DistKM + " Km";
+            document.getElementById("dvDistance").innerHTML = DistKM.toFixed(1) + " Km";
             document.getElementById("dvDuration").innerHTML = hDisplay + mDisplay;
-            // document.getElementById("dvEst").innerHTML = hDisplay + mDisplay;
+            document.getElementById("dvEst").innerHTML = "Rp. " + rupiah;
         }
     </script>
 @endsection
