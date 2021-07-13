@@ -16,4 +16,9 @@ class Dijkstra extends Model
         'Latitude',
         'Longitude'
     ];
+
+    public function cabangs()
+    {
+        return $this->belongsTo(Cabang::class, 'id');
+    }
 }

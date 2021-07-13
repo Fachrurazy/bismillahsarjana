@@ -26,6 +26,7 @@ Route::resource('/maps', 'MapsController');
 Route::resource('/distance', 'DistanceController');
 Route::resource('/cabang', 'CabangController');
 Route::resource('/dijkstra', 'DijkstraController');
+Route::get('/getloc', 'DijkstraController@getJson');
 Route::resource('/saving', 'SavingController');
 Route::get('/saving/ajax/{id}', 'SavingController@get_distance');
 Route::resource('/distancematrix', 'MatrixController');

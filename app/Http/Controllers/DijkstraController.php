@@ -19,6 +19,12 @@ class DijkstraController extends Controller
         return view('dijkstra.index', compact('datas','dt'));
     }
 
+    public function getJson()
+    {
+        $dt = Cabang::all();
+        return response()->json($dt,200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,15 +58,15 @@ class DijkstraController extends Controller
         // echo strval($origin);
         // echo $destination;
 
-        $graph = new Graph();
-        $graph->add_vertex( 'Cikaret', array( 'Jatijajar' => 10511, 'Cilodong' => 3781, 'Citayam' => 8118, 'Karadenan' => 10181 ) );
-        $graph->add_vertex( 'Jatijajar', array( 'Cikaret' => 10511, 'Cilodong' => 7889, 'Babakanmadang' => 22707 ) );
-        $graph->add_vertex( 'Cilodong', array( 'Jatijajar' => 7889, 'Cikaret' => 3781, 'Citayam' => 10263 ) );
-        $graph->add_vertex( 'Citayam', array( 'Cikaret' => 8118, 'Cilodong' => 10263, 'Karadenan' => 8339 ) );
-        $graph->add_vertex( 'Karadenan', array( 'Cikaret' => 1081, 'Citayam' => 8339, 'Babakanmadang' => 12102  ) );
-        $graph->add_vertex( 'Babakanmadang', array( 'Karadenan' => 12102, 'Jatijajar' => 22707) );
+        // $graph = new Graph();
+        // $graph->add_vertex( 'Cikaret', array( 'Jatijajar' => 10511, 'Cilodong' => 3781, 'Citayam' => 8118, 'Karadenan' => 10181 ) );
+        // $graph->add_vertex( 'Jatijajar', array( 'Cikaret' => 10511, 'Cilodong' => 7889, 'Babakanmadang' => 22707 ) );
+        // $graph->add_vertex( 'Cilodong', array( 'Jatijajar' => 7889, 'Cikaret' => 3781, 'Citayam' => 10263 ) );
+        // $graph->add_vertex( 'Citayam', array( 'Cikaret' => 8118, 'Cilodong' => 10263, 'Karadenan' => 8339 ) );
+        // $graph->add_vertex( 'Karadenan', array( 'Cikaret' => 1081, 'Citayam' => 8339, 'Babakanmadang' => 12102  ) );
+        // $graph->add_vertex( 'Babakanmadang', array( 'Karadenan' => 12102, 'Jatijajar' => 22707) );
         
-        print_r($graph->shortest_path('Cikaret', 'Karadenan'));
+        // print_r($graph->shortest_path('Cikaret', 'Karadenan'));
         // return response($graph->shortest_path('Cikaret', 'Babakanmadang'));
         
     }
