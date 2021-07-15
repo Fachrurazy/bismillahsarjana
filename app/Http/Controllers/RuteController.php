@@ -138,9 +138,18 @@ class RuteController extends Controller
             $calcLatAsalTujuan = $latTujuan - $latAsal;
             $calcLonAsalTujuan = $lonTujuan - $lonAsal; 
             $calc = sqrt(pow($calcLatAsalTujuan, 2) + pow($calcLonAsalTujuan, 2)) * $lingkarBumi;
-            array_push($result, $calc);
+            array_push($result, 
+            [
+                'nc' => $cabang[$i]['nc'],
+                'calc' => $calc,
+            ]);
         }
-        // sort($result);
+        // return $result;die();
+        // asort($result);
+        usort($result, function($a, $b)
+                                {
+                                    return $a['calc']<=>$b['calc'];
+                                });
         return view('rute.show', [
             'cabang' => $cabang, 
             'dt' => $dt,
@@ -179,7 +188,10 @@ class RuteController extends Controller
      */
     public function destroy($id)
     {
-        Rute_Detail::find($id)->delete();
-        return redirect()->route('saving.index')->with('success', 'Data berhasil dihapus');
+        DB::table('rute_detail')
+        ->where('id_rute', $id)
+        ->delete();
+        Rute::find($id)->delete();
+        return redirect()->route('rute.index')->with('success', 'Data berhasil dihapus');
     }
 }

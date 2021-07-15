@@ -240,11 +240,11 @@ return [
             'url'  => 'cabang',
             'icon' => 'fas fa-fw fa-rocket',
         ],
-        [
-            'text' => 'Google Maps',
-            'url'  => 'maps',
-            'icon' => 'fas fa-fw fa-map',
-        ],
+        // [
+        //     'text' => 'Google Maps',
+        //     'url'  => 'maps',
+        //     'icon' => 'fas fa-fw fa-map',
+        // ],
         [
             'text' => 'Saving Matrix',
             // 'url'  => 'saving',

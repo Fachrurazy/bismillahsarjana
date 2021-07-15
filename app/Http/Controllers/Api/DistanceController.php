@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use App\Estimation;
 use App\Matrix;
 use SplPriorityQueue;
@@ -19,88 +20,98 @@ class DistanceController extends Controller
         return $response;
     }
 
-    // public function getDistance(Request $request)
-    // {
-    //         $gmaps = $this->distance($request->origin, $request->destination);
-
-    //         $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
-    //         $distance = $getdistanceval / 1000;
-
-    //         Matrix::create([
-    //             'Kode_Origin' => $request->ID1,
-    //             'Kode_Destination' => $request->ID2,
-    //             'Distance' => $distance,
-    //         ]);
-    //         return redirect('/distancematrix')->with('success','Data berhasil ditambahkan');
-    // }
-
     public function getDistance(Request $request)
     {
-        // print_r($request->all());die();
-        if ($request->destination1 == "" && $request->destination2 == "") {
-            $gmaps = $this->distance($request->origin, $request->destination);
+        $rules = [
+            'ID1' => 'required',
+            'ID2' => 'required',
+        ];
+ 
+        $validator = Validator::make($request->all(), $rules);
 
-            $getdistance = $gmaps['rows'][0]['elements'][0]['distance']['text'];
-            $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
-            $getduration = $gmaps['rows'][0]['elements'][0]['duration']['text'];
-            $getdurationval = $gmaps['rows'][0]['elements'][0]['duration']['value'];
-
-            $res = [
-                'origin' => $request->origin,
-                'destination' => $request->destination,
-                'distance' => $getdistance,
-                'distance_value' => $getdistanceval,
-                'duration' => $getduration,
-                'duration_value' => $getdurationval,
-            ];
-
-            $dataCreate = Estimation::create($res);
-            $response_data_res = $dataCreate;
-            // $estimate = 'Jarak dari '.$request->origin.' ke '.$request->destination.' adalah '.$getdistance;
-            // // echo $estimate;die();
-        } elseif ($request->destination2 == "") {
-            $gmaps = $this->distance($request->origin, $request->destination);
-            $gmaps1 = $this->distance($request->destination, $request->destination1);
-            
-            $getdistance = $gmaps['rows'][0]['elements'][0]['distance']['text'];
-            $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
-            $getduration = $gmaps['rows'][0]['elements'][0]['duration']['text'];
-            $getdurationval = $gmaps['rows'][0]['elements'][0]['duration']['value'];
-            
-            $getdistance1 = $gmaps1['rows'][0]['elements'][0]['distance']['text'];
-            $getdistanceval1 = $gmaps1['rows'][0]['elements'][0]['distance']['value'];
-            $getduration1 = $gmaps1['rows'][0]['elements'][0]['duration']['text'];
-            $getdurationval1 = $gmaps1['rows'][0]['elements'][0]['duration']['value'];
-
-            $res = [
-                'origin' => $request->origin,
-                'destination' => $request->destination,
-                'distance' => $getdistance,
-                'distance_value' => $getdistanceval,
-                'duration' => $getduration,
-                'duration_value' => $getdurationval,
-            ];
-
-            $res1 = [
-                'origin' => $request->destination,
-                'destination' => $request->destination1,
-                'distance' => $getdistance1,
-                'distance_value' => $getdistanceval1,
-                'duration' => $getduration1,
-                'duration_value' => $getdurationval1,
-            ];
-
-            $dataCreate = Estimation::create($res);
-            $dataCreate1 = Estimation::create($res1);
-            
-
-            $response_data_res = [
-                $dataCreate,
-                $dataCreate1
-            ];
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
-        return response($response_data_res);
+            $gmaps = $this->distance($request->origin, $request->destination);
+
+            $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
+            $distance = $getdistanceval / 1000;
+
+            Matrix::create([
+                'Kode_Origin' => $request->ID1,
+                'Kode_Destination' => $request->ID2,
+                'Distance' => $distance,
+            ]);
+            return redirect()->route('distancematrix.index')->with('success', 'Data berhasil ditambahkan');
     }
+
+    // public function getDistance(Request $request)
+    // {
+    //     // print_r($request->all());die();
+    //     if ($request->destination1 == "" && $request->destination2 == "") {
+    //         $gmaps = $this->distance($request->origin, $request->destination);
+
+    //         $getdistance = $gmaps['rows'][0]['elements'][0]['distance']['text'];
+    //         $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
+    //         $getduration = $gmaps['rows'][0]['elements'][0]['duration']['text'];
+    //         $getdurationval = $gmaps['rows'][0]['elements'][0]['duration']['value'];
+
+    //         $res = [
+    //             'origin' => $request->origin,
+    //             'destination' => $request->destination,
+    //             'distance' => $getdistance,
+    //             'distance_value' => $getdistanceval,
+    //             'duration' => $getduration,
+    //             'duration_value' => $getdurationval,
+    //         ];
+
+    //         $dataCreate = Estimation::create($res);
+    //         $response_data_res = $dataCreate;
+    //         // $estimate = 'Jarak dari '.$request->origin.' ke '.$request->destination.' adalah '.$getdistance;
+    //         // // echo $estimate;die();
+    //     } elseif ($request->destination2 == "") {
+    //         $gmaps = $this->distance($request->origin, $request->destination);
+    //         $gmaps1 = $this->distance($request->destination, $request->destination1);
+            
+    //         $getdistance = $gmaps['rows'][0]['elements'][0]['distance']['text'];
+    //         $getdistanceval = $gmaps['rows'][0]['elements'][0]['distance']['value'];
+    //         $getduration = $gmaps['rows'][0]['elements'][0]['duration']['text'];
+    //         $getdurationval = $gmaps['rows'][0]['elements'][0]['duration']['value'];
+            
+    //         $getdistance1 = $gmaps1['rows'][0]['elements'][0]['distance']['text'];
+    //         $getdistanceval1 = $gmaps1['rows'][0]['elements'][0]['distance']['value'];
+    //         $getduration1 = $gmaps1['rows'][0]['elements'][0]['duration']['text'];
+    //         $getdurationval1 = $gmaps1['rows'][0]['elements'][0]['duration']['value'];
+
+    //         $res = [
+    //             'origin' => $request->origin,
+    //             'destination' => $request->destination,
+    //             'distance' => $getdistance,
+    //             'distance_value' => $getdistanceval,
+    //             'duration' => $getduration,
+    //             'duration_value' => $getdurationval,
+    //         ];
+
+    //         $res1 = [
+    //             'origin' => $request->destination,
+    //             'destination' => $request->destination1,
+    //             'distance' => $getdistance1,
+    //             'distance_value' => $getdistanceval1,
+    //             'duration' => $getduration1,
+    //             'duration_value' => $getdurationval1,
+    //         ];
+
+    //         $dataCreate = Estimation::create($res);
+    //         $dataCreate1 = Estimation::create($res1);
+            
+
+    //         $response_data_res = [
+    //             $dataCreate,
+    //             $dataCreate1
+    //         ];
+    //     }
+    //     return response($response_data_res);
+    // }
 
     
 

@@ -17,7 +17,7 @@
                             <div class="row">
                                 <div class="col-sm">
                                     <div class="card-body"><a><b>Kode Origin</b></a><br>
-                                        <select name="Kode_Origin" id="Kode_Origin">
+                                        <select name="Kode_Origin" id="Kode_Origin" required>
                                             <option>Pilih Origin</option>
                                             @foreach ($datas as $item)
                                                 <option value="{{ $item->id }}">{{ $item->Kode_Cabang }} -
@@ -28,22 +28,25 @@
                                 </div>
                                 <div class="col-sm">
                                     <div class="card-body"><a><b>ID Cabang</b></a><br>
-                                        <input type="text" name="ID1" id="ID1" value="" readonly>
+                                        <input type="text" name="ID1" id="ID1" value="" readonly required>
+                                        @if ($errors->has('ID1'))
+                                        <span class="text-danger">{{ $errors->first('ID1') }}</span>
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="card-body"><a><b>Alamat</b></a><br>
-                                        <input type="text" name="origin" id="origin" value="" readonly>
+                                        <input type="text" name="origin" id="origin" value="" readonly required>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="card-body"><a><b>Latitude</b></a><br>
-                                        <input type="text" name="lat1" id="lat1" value="" readonly>
+                                        <input type="text" name="lat1" id="lat1" value="" readonly required>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="card-body"><a><b>Longitude</b></a><br>
-                                        <input type="text" name="long1" id="long1" value="" readonly>
+                                        <input type="text" name="long1" id="long1" value="" readonly required>
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +54,7 @@
                         <div class="row">
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Kode Destination</b></a><br>
-                                    <select name="Kode_Destination" id="Kode_Destination">
+                                    <select name="Kode_Destination" id="Kode_Destination" required>
                                         <option>Pilih Destination</option>
                                         @foreach ($datas as $item)
                                             <option value="{{ $item->id }}">{{ $item->Kode_Cabang }} -
@@ -62,22 +65,25 @@
                             </div>
                             <div class="col-sm">
                                 <div class="card-body"><a><b>ID Cabang</b></a><br>
-                                    <input type="text" name="ID2" id="ID2" readonly>
+                                    <input type="text" name="ID2" id="ID2" readonly required>
+                                    @if ($errors->has('ID2'))
+                                        <span class="text-danger">{{ $errors->first('ID2') }}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Alamat</b></a><br>
-                                    <input type="text" name="destination" id="destination" readonly>
+                                    <input type="text" name="destination" id="destination" readonly required>
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Latitude</b></a><br>
-                                    <input type="text" name="lat2" id="lat2" readonly>
+                                    <input type="text" name="lat2" id="lat2" readonly required>
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="card-body"><a><b>Longitude</b></a><br>
-                                    <input type="text" name="long2" id="long2" readonly>
+                                    <input type="text" name="long2" id="long2" readonly required>
                                 </div>
                             </div>
                         </div>

@@ -99,7 +99,7 @@
                                                         <th scope="row">Rute</th>
                                                         <td scope="col" id="lbl">
                                                             @foreach ($result as $item)
-                                                                ({{ $cabang[$jml - 1]['kc'] }} {{ $cabang[$jml - 1]['nc'] }} - {{ $item }})
+                                                                ({{ $item['nc'] }} - {{ $item['calc'] }})
                                                                 @php
                                                                     $jml++;
                                                                 @endphp
@@ -186,7 +186,7 @@
             var latlong = <?php echo json_encode($dt->getdetail); ?>;
 
             // console.log(latlong);
-
+            // console.log(latlong[i]['cabangs']);
             var waypoints = [];
             for (i in latlong) {
                 // console.log(latlong[i]['cabangs']['Latitude']);
@@ -223,8 +223,6 @@
             for (i = 0; i < myroute.legs.length; i++) {
                 totalDist += myroute.legs[i].distance.value;
                 totalTime += myroute.legs[i].duration.value;
-
-                console.log(myroute.legs[i].duration.text);
             }
             DistKM = totalDist / 1000;
             calc = (DistKM.toFixed(1)/10)*9500;
