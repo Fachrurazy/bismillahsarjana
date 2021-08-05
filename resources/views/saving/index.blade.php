@@ -23,8 +23,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kode Origin</th>
-                                    <th>Kode Destination</th>
+                                    <th>Asal</th>
+                                    <th>Tujuan</th>
                                     <th>Saving List</th>
                                     <th>Action</th>
                                 </tr>
@@ -36,8 +36,8 @@
                                 @foreach ($datas as $saving)
                                     <tr>
                                         <td>{{ $no }}</td>
-                                        <td>{{ $saving->Kode_Origin }}</td>
-                                        <td>{{ $saving->Kode_Destination }}</td>
+                                        <td>{{ $saving->Nama_Origin }}</td>
+                                        <td>{{ $saving->Nama_Destination }}</td>
                                         <td>{{ $saving->Saving }}</td>
                                         <td>
                                             {{-- <a data-id="{{ $saving['id'] }}" data-Nama_saving="{{ $saving['Nama_saving'] }}"

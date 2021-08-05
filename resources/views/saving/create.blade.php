@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'DATA SAVING MATRIX')
+@section('title', 'CREATE SAVING MATRIX')
 @section('content_header')
     <div class="card-header">
         <h1>Tambah Saving Matrix</h1><br>

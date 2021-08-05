@@ -19,7 +19,7 @@ class SavingController extends Controller
     {
         $datas = DB::select(
             DB::raw("
-            select svm.id, c1.Kode_Cabang AS Kode_Origin, c2.Kode_Cabang AS Kode_Destination, svm.Saving
+            select svm.id, c1.Nama_Cabang AS Nama_Origin, c2.Nama_Cabang AS Nama_Destination, svm.Saving
             FROM savingmatrix svm
             INNER JOIN cabang c1
             ON svm.Kode_Origin = c1.id

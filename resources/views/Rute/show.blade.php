@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pembelian Barang')
+@section('title', 'RUTE DETAIL')
 @section('content_header')
     <div class="card-header">
         <h3>DATA RUTE DETAIL</h3>
@@ -96,10 +96,19 @@
                                                         <td scope="col" id="dvEst"></td>
                                                     </tr>
                                                     <tr>
+                                                        <th scope="row">Jalur yang dilalui</th>
+                                                        <td scope="col">
+                                                            <select id="travelmode" class="form-control col-md-3">
+                                                                <option value="false">Jalur Tol</option>
+                                                                <option value="true">Jalur Tanpa Tol</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
                                                         <th scope="row">Rute</th>
                                                         <td scope="col" id="lbl">
                                                             @foreach ($result as $item)
-                                                                ({{ $item['nc'] }} - {{ $item['calc'] }})
+                                                                ({{ $item['nc'] }}) 
                                                                 @php
                                                                     $jml++;
                                                                 @endphp
@@ -108,7 +117,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Action</th>
-                                                        <td scope="col"><button type="submit" id="inputbtn" class="btn btn-info">show polyline</button></td>
+                                                        <td scope="col"><button type="submit" id="inputbtn" class="btn btn-info">Tampilkan Rute</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -171,7 +180,10 @@
                     lng: 113.921327
                 }
             });
+            const trafficLayer = new google.maps.TrafficLayer();
+            
             directionsDisplay.setMap(map);
+            trafficLayer.setMap(map);
 
             var onChangeHandler = function() {
                 // a = document.getElementById('Alamat-1').value;
@@ -186,10 +198,8 @@
             var latlong = <?php echo json_encode($dt->getdetail); ?>;
 
             // console.log(latlong);
-            // console.log(latlong[i]['cabangs']);
             var waypoints = [];
             for (i in latlong) {
-                // console.log(latlong[i]['cabangs']['Latitude']);
                 waypoints.push({
                     location: new google.maps.LatLng(latlong[i]['cabangs']['Latitude'], latlong[i]['cabangs'][
                         'Longitude'
@@ -197,14 +207,21 @@
                     stopover: true
                 });
             }
+            var tolls;
+            if (document.getElementById('travelmode').value == 'false'){
+                tolls = false;
+            }else{
+                tolls = true;
+            }
             var originA = document.getElementById('lat-1').value + "," + document.getElementById('long-1').value;
             var destinationA = document.getElementById('lat-1').value + "," + document.getElementById('long-1').value;
             directionsService.route({
                 origin: originA,
-                destination: originA,
+                destination: destinationA,
                 waypoints: waypoints,
                 optimizeWaypoints: true,
-                travelMode: 'DRIVING'
+                travelMode: 'DRIVING',
+                avoidTolls: tolls
             }, function(response, status) {
                 if (status === 'OK') {
                     directionsDisplay.setDirections(response);
@@ -225,7 +242,23 @@
                 totalTime += myroute.legs[i].duration.value;
             }
             DistKM = totalDist / 1000;
-            calc = (DistKM.toFixed(1)/10)*9500;
+            // calc = (DistKM.toFixed(1)/10)*9500;
+            var calc;
+            
+            d = Number(totalTime);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " Jam ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " Menit ") : "";
+            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " Detik") : "";
+            
+            if(h>=10){
+                calc = (DistKM.toFixed(1)/10)*14000;
+            } else {
+                calc = (DistKM.toFixed(1)/10)*9500;
+            }
             var bilangan = Math.round(calc);
 	
             var	number_string = bilangan.toString(),
@@ -237,16 +270,6 @@
                 separator = sisa ? '.' : '';
                 rupiah += separator + ribuan.join('.');
             }
-
-            d = Number(totalTime);
-            var h = Math.floor(d / 3600);
-            var m = Math.floor(d % 3600 / 60);
-            var s = Math.floor(d % 3600 % 60);
-
-            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours ") : "";
-            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes ") : "";
-            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-
             document.getElementById("dvDistance").innerHTML = DistKM.toFixed(1) + " Km";
             document.getElementById("dvDuration").innerHTML = hDisplay + mDisplay;
             document.getElementById("dvEst").innerHTML = "Rp. " + rupiah;

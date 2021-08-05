@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'DATA SAVING MATRIX')
+@section('title', 'DATA RUTE')
 @section('content_header')
     <div class="card-header">
         <h3>RUTE KELOMPOK</h3>

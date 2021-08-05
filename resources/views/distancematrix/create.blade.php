@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'DATA SAVING MATRIX')
+@section('title', 'CREATE DISTANCE MATRIX')
 @section('content_header')
     <div class="card-header">
         <h3>Tambah Distance Matrix</h3>
@@ -8,6 +8,14 @@
 @stop
 @section('content')
     <section class="content">
+        <div class="box-header">
+            <p>
+                <button class="btn btn-sm btn-flat btn-warning btn-refresh"><i class="fa fa-refresh"></i>
+                    Refresh</button>
+                    <a href="{{route('distancematrix.index')}}" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-backward"></i>
+                        Back</a>
+            </p>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">

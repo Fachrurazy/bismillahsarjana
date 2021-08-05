@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'PEMBELIAN')
+@section('title', 'CREATE RUTE')
 
 @section('content_header')
     <h1>PENENTUAN RUTE</h1>
@@ -27,17 +27,17 @@
                                         <tr>
                                             {{-- <th>Select</th> --}}
                                             <th>ID</th>
-                                            <th>Kode Origin</th>
-                                            <th>Kode Destination</th>
-                                            <th>Saving</th>
+                                            <th>Asal</th>
+                                            <th>Tujuan</th>
+                                            <th>Nilai Saving</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($datas as $saving)
                                             <tr>
                                                 <td>{{ $saving->id }}</td>
-                                                <td>{{ $saving->Kode_Origin }}</td>
-                                                <td>{{ $saving->Kode_Destination }}</td>
+                                                <td>{{ $saving->Nama_Origin }}</td>
+                                                <td>{{ $saving->Nama_Destination }}</td>
                                                 <td>{{ $saving->Saving }}</td>
                                             </tr>
                                         @endforeach
@@ -76,7 +76,7 @@
                             <form role="form">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Input Kode Cabang</label>
+                                        <label for="exampleInputEmail1">Masukan Nama Cabang</label>
                                         <input type="text" class="form-control" autocomplete="off" name="kode_barang"
                                             id="kode_barang">
                                     </div>
@@ -87,7 +87,7 @@
                         <div class="col-md-3">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">SAVING LIST</label><br>
+                                    <label for="exampleInputEmail1">Nilai Penghematan</label><br>
                                     <button class="btn btn-sm btn-flat btn-success" data-toggle="modal" data-target="#modal-create">CARI</button>
                                 </div>
                             </div>
@@ -103,7 +103,8 @@
                             <table id="tableTransaction" class="table table-bordered table-striped tablekelompok">
                                 <thead>
                                     <tr>
-                                        <th>kode Cabang</th>
+                                        <th>Kode Cabang</th>
+                                        <th>Nama Cabang</th>
                                         <th>Alamat</th>
                                         <th>Latitude</th>
                                         <th>Longitude</th>
@@ -173,6 +174,9 @@
                             nilai +=
                                 '<input type="hidden" class="form-control" name="cabang[]" value="' +
                                 data.data.id + '">';
+                            nilai += '</td>';
+                            nilai += '<td>';
+                            nilai += data.data.Nama_Cabang;
                             nilai += '</td>';
                             nilai += '<td>';
                             nilai += data.data.Alamat;

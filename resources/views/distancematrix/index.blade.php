@@ -23,9 +23,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kode Origin</th>
-                                    <th>Kode Destination</th>
-                                    <th>Distance</th>
+                                    <th>Asal</th>
+                                    <th>Tujuan</th>
+                                    <th>Jarak</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -36,8 +36,8 @@
                                 @foreach ($datas as $cabang)
                                     <tr>
                                         <td>{{ $no }}</td>
-                                        <td>{{ $cabang->Kode_Origin }}</td>
-                                        <td>{{ $cabang->Kode_Destination }}</td>
+                                        <td>{{ $cabang->Nama_Origin }}</td>
+                                        <td>{{ $cabang->Nama_Destination }}</td>
                                         <td>{{ $cabang->Distance }} KM</td>
                                         <td>
                                             {{-- <a data-id="{{ $cabang['id'] }}" data-Nama_Cabang="{{ $cabang['Nama_Cabang'] }}"

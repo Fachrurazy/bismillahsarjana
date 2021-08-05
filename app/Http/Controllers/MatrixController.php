@@ -19,7 +19,7 @@ class MatrixController extends Controller
     {
         $datas = DB::select(
             DB::raw("
-            select dm.id, c1.Kode_Cabang AS Kode_Origin, c2.Kode_Cabang AS Kode_Destination, dm.Distance
+            select dm.id, c1.Nama_Cabang AS Nama_Origin, c2.Nama_Cabang AS Nama_Destination, dm.Distance
             FROM matrixjarak dm
             INNER JOIN cabang c1
             ON dm.Kode_Origin = c1.id
