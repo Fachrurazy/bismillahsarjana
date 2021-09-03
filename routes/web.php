@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/maps', 'MapsController');
 Route::resource('/distance', 'DistanceController');
+Route::post('/vertex', 'DijkstraController@vertex');
 Route::resource('/cabang', 'CabangController');
 Route::resource('/dijkstra', 'DijkstraController');
 Route::get('/getloc', 'DijkstraController@getJson');

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Cabang;
+use App\Vertex;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use App\Estimation;
 use App\Matrix;
+use PhpParser\Node\Stmt\TryCatch;
 use SplPriorityQueue;
 
 
@@ -15,9 +18,64 @@ class DistanceController extends Controller
 {
     public function distance($origin, $destination)
     {
-        $response = Http::post('https://maps.googleapis.com/maps/api/distancematrix/json?origins="'.$origin.'"&destinations="'.$destination.'"&key=AIzaSyBt_cq6yHgOOa8aUgC5_owypFYl32wSWjk&language=id-ID&mode=driving')->json();
+        $response = Http::post('https://maps.googleapis.com/maps/api/distancematrix/json?origins="'.$origin.'"&destinations="'.$destination.'"&key=AIzaSyBq2AKHpAN4gHaEYP5Uq-LNFAsQvPlGAUc&language=id-ID&mode=driving')->json();
         
         return $response;
+    }
+    public function vertex(Request $request)
+    {
+        set_time_limit(5000);
+        $gmaps = $this->distance($request->origin, $request->destination);
+        // return $gmaps;
+        
+        $dt = Cabang::all();
+        // return $dt;
+        $initialnama = $dt[0]['Nama_Cabang']; 
+        $initialcabang = $dt[0]['Alamat'];
+        $initialcount = 0;  
+        $j = 0;
+        $hasil = [];
+        for ($i=0; $i < count($dt) * count($dt); $i++) { 
+            // echo $dt[$i]['Alamat'];
+            $namacabang = $this->distance($initialnama, $dt[$initialcount]['Nama_Cabang']);
+            $result = $this->distance($initialcabang, $dt[$initialcount]['Alamat']);
+            $getdistanceval = $result['rows'][0]['elements'][0]['distance']['value'];
+
+            // 117063
+            if ($getdistanceval < 110000) 
+            {
+                Vertex::create([
+                    'origin' => strval($initialnama),
+                    'destination' => strval($dt[$initialcount]['Nama_Cabang']),
+                    'distanceval' => $getdistanceval
+                ]);
+                // // print_r($initialcabang);
+                // // echo " - ";
+                // // print_r($getdistanceval);
+                // array_push($hasil,$getdistanceval);
+                // // echo " - ";
+                // // print_r($dt[$initialcount]['Alamat']);
+                // echo "<br>";
+            }
+            
+            $initialcount++;
+            if (count($dt) == $initialcount) 
+            {
+                $initialcount = 0;
+                $j = $j + 1;
+                // print_r($initialcabang);
+                if ($j == 27) 
+                {
+                    break;
+                }
+                else 
+                {
+                    $initialcabang = $dt[$j]['Alamat'];
+                    $initialnama = $dt[$j]['Nama_Cabang'];
+                }
+            }
+        }
+        // return json_encode($hasil);
     }
 
     public function getDistance(Request $request)

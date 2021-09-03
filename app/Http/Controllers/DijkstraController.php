@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Cabang;
 use App\Dijkstra;
 use App\Estimation;
+use App\Vertex;
 use Illuminate\Http\Request;
 use SplPriorityQueue;
+use Illuminate\Support\Facades\Http;
 
 
 class DijkstraController extends Controller
@@ -16,7 +18,8 @@ class DijkstraController extends Controller
     {
         $datas = Dijkstra::all();
         $dt = Cabang::all();
-        return view('dijkstra.index', compact('datas','dt'));
+        $vertex = Vertex::all();
+        return view('dijkstra.index', compact('datas','dt','vertex'));
     }
 
     public function getJson()
@@ -24,6 +27,8 @@ class DijkstraController extends Controller
         $dt = Cabang::all();
         return response()->json($dt,200);
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

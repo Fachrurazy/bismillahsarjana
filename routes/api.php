@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/distance', 'Api\DistanceController@getDistance');
+Route::post('/vertex', 'Api\DistanceController@vertex');

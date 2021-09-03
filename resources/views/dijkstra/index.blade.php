@@ -37,8 +37,14 @@
                 </select>
                 <p hidden id="dest"></p>
               </div>
+              <div class="col-md-2">
+                <select id="travelmode" class="custom-select">
+                  <option value="false">Jalur Tol</option>
+                  <option value="true">Jalur Tanpa Tol</option>
+              </select>
+              </div>
               {{-- <div class="input-group-append"> --}}
-                <div class="col-md-4">
+                <div class="col-md-2">
                 <button class="btn btn-outline-primary" type="submit" id="inputbtn" onclick="myFunction()">Cari Rute</button>
               </div>
             </div>
@@ -70,7 +76,7 @@
                       </tr>
                       <tr>
                         <th scope="row">Total Biaya Bahan Bakar</th>
-                        <td scope="col" id="dvBahan"></td>
+                        <td scope="col" id="dvEst"></td>
                       </tr>
                       <tr>
                         <th scope="row">Rute</th>
@@ -218,45 +224,149 @@
     
     function myFunction() {
         var o = document.getElementById("origin").value;
-        var d = document.getElementById("destination").value;        
+        var d = document.getElementById("destination").value;
+        var hasil = [];        
 
         var g = new Graph();
 
-        g.addVertex('Pabrik', {Cianjur: 80699, Sukamanah: 74677, Indramayu: 154153, Garut: 46476, Cibitung: 136040});
-        g.addVertex('Tegal', {Majalengka: 126801, Brebes: 12116});
-        g.addVertex('Majalengka', {Tegal: 126801, Brebes: 118629, Cirebon: 22190, Kadipaten: 13319});
-        g.addVertex('Brebes', {Majalengka: 118629, Cirebon: 94045, Kadipaten: 124620, Tegal: 12116});
-        g.addVertex('Kadipaten', {Majalengka: 13319, Brebes: 124620, Cirebon: 34985, Garut: 63329, Indramayu: 59748});
-        g.addVertex('Cirebon', {Kadipaten: 34985, Brebes: 94045, Indramayu: 88933, Garut: 95955, Majalengka: 22190});
-        g.addVertex('Indramayu', {Cirebon: 88933, Kadipaten: 59748, Garut: 102032, Pabrik: 154153, Sukamanah: 168319});
-        g.addVertex('Garut', {Indramayu: 102032, Kadipaten: 63329, Cirebon: 95955, Pabrik: 46476, Sukamanah: 110648});
-        g.addVertex('Sukamanah', {Cibitung: 91292, Indramayu: 168319, Garut: 110648, Pabrik: 74677, Cianjur: 9830});
-        g.addVertex('Cianjur', {Pabrik: 80699, Sukamanah: 9830, Cibitung: 123669, Kranji: 109192});
-        g.addVertex('Cibitung', {Sukamanah: 91292, Kranji: 18628, Cakung: 32688, Cianjur: 123669, Pabrik: 136040});
-        g.addVertex('Kranji', {Bintara: 2049, Handoyo: 12220, CileungsiIndah: 25442, Cianjur: 109192, Cakung: 13811, Cibitung: 18628});
-        g.addVertex('Bintara', {Tebet: 12273, Jatikramat: 11452, Handoyo: 13656, Kranji: 2049, Cakung: 13086, TanjungPriok: 30834, CileungsiIndah: 37124});
-        g.addVertex('Cakung', {Kranji: 13811, Bintara: 13086, Tebet: 18366, TanjungPriok: 23057, Cibitung: 32688});
-        g.addVertex('TanjungPriok', {Tebet: 21569, Bintara: 26699, Cakung: 23057});
-        g.addVertex('Tebet', {Jatikramat: 17602, TanjungPriok: 21569, Cakung: 18366, Bintara: 12273, Handoyo: 23983});
-        g.addVertex('Jatikramat', {Jatijajar: 26886, Cilodong: 29325, Handoyo: 7311, Bintara: 11452 , Tebet: 17602});
-        g.addVertex('Handoyo', {Jatijajar: 31805, CileungsiIndah: 13222, Jatikramat: 7311, Kranji: 12220, Bintara: 13656, Tebet: 23983});
-        g.addVertex('CileungsiIndah', {Handoyo: 13222, Kranji: 25442, Jatijajar: 18831, DarnoBogor: 6447});
-        g.addVertex('Jatijajar', {Cilodong: 5778, DarnoBogor: 12709, Cibinong: 9201, Jatikramat: 26886, Handoyo: 31805, CileungsiIndah: 18831});
-        g.addVertex('Cilodong', {DarnoBogor: 12709, Cibinong: 9201, Cikaret: 10611, Jatikramat: 29325, Jatijajar: 5778});
-        g.addVertex('DarnoBogor', {Cibinong: 20108, Babakanmadang: 24522, Jatijajar: 12709, CileungsiIndah: 6447, Cilodong: 12709});
-        g.addVertex('Cikaret', {Citayam: 8118, Cilodong: 10611, Cibinong: 3262});
-        g.addVertex('Cibinong', {Cikaret: 3262, Citayam: 8950, Karadenan: 11006, Babakanmadang: 16519, Cilodong: 9201, DarnoBogor: 20108, Jatijajar: 9201});
-        g.addVertex('Citayam', {Karadenan: 8339, Cikaret: 8118, Cibinong: 8950});
-        g.addVertex('Karadenan', {Babakanmadang: 12102, Citayam: 8339, Cibinong: 11006});
-        g.addVertex('Babakanmadang', {Karadenan: 12102, Cibinong: 16519, DarnoBogor: 24522});
+        // let vertex = {'Cianjur': 80699, 'Sukamanah': 74677, 'Indramayu': 154153, 'Garut': 46476, 'Cibitung': 136040};
 
-        var hasil = g.shortestPath(o, d).concat([o]).reverse();
+        // for (let index = 0; index < array.length; index++) {
+        //   const element = array[index];
+        // }
+        var dataLokasi = <?php echo json_encode($dt); ?>;
 
+        var cures = <?php echo json_encode($vertex); ?>;
+        let counterver = 1;
+        var origin = cures[0]["origin"];
+        var cek = [];
+        let dlj = 0;
+        let countObj = [];
+        let arr = [];
+
+        for (let index = 0; index < cures.length; index++) {
+          arr.push(cures[index]["origin"]);
+          
+        }
+        var counts = {};
+
+        arr.forEach(function(x) {
+            counts[x] = (counts[x] || 0) + 1;
+        });
+        console.log(arr);
+        let counteri = 0;
+        let counterOrigin = -1; 
+        for (let index = 0; index < dataLokasi.length; index++) {
+          console.log(dataLokasi[index]["Nama_Cabang"] + ":" + Object.values(counts)[index] + "<br/>");
+          let numCountDestination = Object.values(counts)[index];
+          var dict = {};
+          for (let i = 0; i < Object.values(counts)[index]; i++) {
+            // var CounterOrigin = cures[i]["origin"];
+            // console.log("CounterOrigin ->" + CounterOrigin);
+            // origin = cures[counterver]["origin"];
+            var desti = cures[counteri]["destination"];
+            var valdes = cures[counteri]["distanceval"];
+            console.log("destination ->" + desti);
+            
+            // var dict = {key1 : desti, key2 : valdes};
+            // let vertex = {};
+             // create an empty array
+            dict[desti] = Number(valdes);
+            // dict.push({
+            //         key:  desti,
+            //         value: valdes
+            //     });
+            counteri = counteri + 1;
+            counterOrigin = counterOrigin + 1;
+            console.log("dict ->" , dict);
+            console.log("counteri ->" + counteri);
+            if (counteri == numCountDestination) 
+            {
+                g.addVertex(cures[counterOrigin]["origin"], dict);
+                counteri = 0;
+            }
+          }   
+        }
+        // for (let index = 0; index < cures.length; index++) {
+          
+        // } 
+        // for ( var key in cures ) {
+        //     var cure = cures[key];
+        //     // your code from above modified to use the Javascript variable created
+        //     $("#new").append('<label for="nice_text">ID Type</label><input type="text" id="nice_text" name="cureIdtype" class="input-text" value="'+cure["id_type"]+'"/>');
+        // }
+
+        //let vertex = {'Cianjur': 80699, 'Sukamanah': 74677, 'Indramayu': 154153, 'Garut': 46476, 'Cibitung': 136040};
+
+        //let locName = {'Cianjur', 'Sukamanah', 'Indramayu', 'Garut', 'Cibitung'};
+        //let distanceVal = {80699, 74677, 154153, 46476, 136040};
+
+        // for (let index = 0; index < 1; index++) {
+        //     for (let j = 0; j < 4; j++) {
+        //         g.addVertex('Pabrik', locName[j]: distanceVal[j])
+        //         // locName[j]: distanceVal[j];
+        //         // console.log(vertex);
+        //     }
+        // }
+        //vertex.push
+        // var dict = {};
+        // for (let i = 0; i < 6; i++) {
+        //     // var CounterOrigin = cures[i]["origin"];
+        //     // console.log("CounterOrigin ->" + CounterOrigin);
+        //     // origin = cures[counterver]["origin"];
+        //     var desti = cures[i]["destination"];
+        //     var valdes = cures[i]["distanceval"];
+        //     console.log("destination ->" + desti);
+            
+        //     // var dict = {key1 : desti, key2 : valdes};
+        //     // let vertex = {};
+        //      // create an empty array
+        //     dict[desti] = Number(valdes);
+        //     // dict.push({
+        //     //         key:  desti,
+        //     //         value: valdes
+        //     //     });
+        //     // counteri = counteri + 1;
+        //     console.log("dict ->" , dict);
+        //     // console.log("counteri ->" + counteri);
+        // } 
+
+        // g.addVertex('Pabrik', vertex);
+        // g.addVertex(cures[0]["origin"], dict);
+        // g.addVertex('Tegal', {'Majalengka': 126801, 'Brebes': 12116});
+        // g.addVertex('Majalengka', {'Tegal': 126801, 'Brebes': 118629, 'Cirebon': 22190, 'Kadipaten': 13319});
+        // g.addVertex('Brebes', {'Majalengka': 118629, 'Cirebon': 94045, 'Kadipaten': 124620, 'Tegal': 12116});
+        // g.addVertex('Kadipaten', {'Majalengka': 13319, 'Brebes': 124620, 'Cirebon': 34985, 'Garut': 63329, 'Indramayu': 59748});
+        // g.addVertex('Cirebon', {'Kadipaten': 34985, 'Brebes': 94045, 'Indramayu': 88933, 'Garut': 95955, 'Majalengka': 22190});
+        // g.addVertex('Indramayu', {'Cirebon': 88933, 'Kadipaten': 59748, 'Garut': 102032, 'Pabrik': 154153, 'Sukamanah': 168319});
+        // g.addVertex('Garut', {'Indramayu': 102032, 'Kadipaten': 63329, 'Cirebon': 95955, 'Pabrik': 46476, 'Sukamanah': 110648});
+        // g.addVertex('Sukamanah', {'Cibitung': 91292, 'Indramayu': 168319, 'Garut': 110648, 'Pabrik': 74677, 'Cianjur': 9830});
+        // g.addVertex('Cianjur', {'Pabrik': 80699, 'Sukamanah': 9830, 'Cibitung': 123669, 'Kranji': 109192});
+        // g.addVertex('Cibitung', {'Sukamanah': 91292, 'Kranji': 18628, 'Cakung': 32688, 'Cianjur': 123669, 'Pabrik': 136040});
+        // g.addVertex('Kranji', {'Bintara': 2049, 'Handoyo': 12220, 'CileungsiIndah': 25442, 'Cianjur': 109192, 'Cakung': 13811, 'Cibitung': 18628});
+        // g.addVertex('Bintara', {'Tebet': 12273, 'Jatikramat': 11452, 'Handoyo': 13656, 'Kranji': 2049, 'Cakung': 13086, 'TanjungPriok': 30834, 'CileungsiIndah': 37124});
+        // g.addVertex('Cakung', {'Kranji': 13811, 'Bintara': 13086, 'Tebet': 18366, 'TanjungPriok': 23057, 'Cibitung': 32688});
+        // g.addVertex('TanjungPriok', {'Tebet': 21569, 'Bintara': 26699, 'Cakung': 23057});
+        // g.addVertex('Tebet', {'Jatikramat': 17602, 'TanjungPriok': 21569, 'Cakung': 18366, 'Bintara': 12273, 'Handoyo': 23983});
+        // g.addVertex('Jatikramat', {'Jatijajar': 26886, 'Cilodong': 29325, 'Handoyo': 7311, 'Bintara': 11452 , 'Tebet': 17602});
+        // g.addVertex('Handoyo', {'Jatijajar': 31805, 'CileungsiIndah': 13222, 'Jatikramat': 7311, 'Kranji': 12220, 'Bintara': 13656, 'Tebet': 23983});
+        // g.addVertex('CileungsiIndah', {'Handoyo': 13222, 'Kranji': 25442, 'Jatijajar': 18831, 'DarnoBogor': 6447});
+        // g.addVertex('Jatijajar', {'Cilodong': 5778, 'DarnoBogor': 12709, 'Cibinong': 9201, 'Jatikramat': 26886, 'Handoyo': 31805, 'CileungsiIndah': 18831});
+        // g.addVertex('Cilodong', {'DarnoBogor': 12709, 'Cibinong': 9201, 'Cikaret': 10611, 'Jatikramat': 29325, 'Jatijajar': 5778});
+        // g.addVertex('DarnoBogor', {'Cibinong': 20108, 'Babakanmadang': 24522, 'Jatijajar': 12709, 'CileungsiIndah': 6447, 'Cilodong': 12709});
+        // g.addVertex('Cikaret', {'Citayam': 8118, 'Cilodong': 10611, 'Cibinong': 3262});
+        // g.addVertex('Cibinong', {'Cikaret': 3262, 'Citayam': 8950, 'Karadenan': 11006, 'Babakanmadang': 16519, 'Cilodong': 9201, 'DarnoBogor': 20108, 'Jatijajar': 9201});
+        // g.addVertex('Citayam', {'Karadenan': 8339, 'Cikaret': 8118, 'Cibinong': 8950});
+        // g.addVertex('Karadenan', {'Babakanmadang': 12102, 'Citayam': 8339, 'Cibinong': 11006});
+        // g.addVertex('Babakanmadang', {'Karadenan': 12102, 'Cibinong': 16519, 'DarnoBogor': 24522});
+
+        hasil = g.shortestPath(o, d).concat([o]).reverse();
         document.getElementById("namarute").innerHTML = o + " - " + d;
         document.getElementById("lblPath").innerHTML = hasil;
         allDestination = hasil;
+        console.log("Hasil ->" + hasil);
 
-        var dataLokasi = <?php echo json_encode($dt); ?>;
+        
 
         for (i in dataLokasi) {
             if (o == dataLokasi[i]["Nama_Cabang"]) {
@@ -272,7 +382,7 @@
     </script>
 
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt_cq6yHgOOa8aUgC5_owypFYl32wSWjk&callback=initMap&libraries=places&language=id"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACOLjZpTZ6zPoc0_xPmOjz0BWL2LPTDsQ&callback=initMap&libraries=places&language=id"
         defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     
@@ -287,7 +397,11 @@
             zoom: 5,
             center: {lat: -0.789275, lng: 113.921327}
         });
+        
+        const trafficLayer = new google.maps.TrafficLayer();
+            
         directionsDisplay.setMap(map);
+        trafficLayer.setMap(map);
 
         var onChangeHandler = function() {
             calculateAndDisplayRoute(directionsService, directionsDisplay);
@@ -330,7 +444,12 @@
                     });
                 }
             }
-            
+        var tolls;
+        if (document.getElementById('travelmode').value == 'false'){
+            tolls = false;
+        }else{
+            tolls = true;
+        }   
         directionsService.route({
             origin: {lat: latitudeORG, lng: longitudeORG},
             destination: {lat: latitudDEST, lng: longitudeDEST},
@@ -339,7 +458,8 @@
             waypoints: waypoints,
             optimizeWaypoints: true,
             // destination: document.getElementById('destination2').value,
-            travelMode: 'DRIVING'
+            travelMode: 'DRIVING',
+            avoidTolls: tolls
         }, function(response, status) {
             if (status === 'OK') {
             directionsDisplay.setDirections(response);
@@ -350,25 +470,85 @@
         });
         }
 
+        // function computeTotalDistance(result) {
+        //     var totalDist = 0;
+        //     var totalTime = 0;
+        //     var myroute = result.routes[0];
+        //     // totalDist = distances.text;
+        //     // totalTime = duration.text
+        //     console.log(myroute);
+        //     for (i = 0; i < myroute.legs.length; i++) {
+        //         totalDist += myroute.legs[i].distance.value;
+        //         totalTime += myroute.legs[i].duration.value;
+                
+        //     console.log( myroute.legs[i].distance.value);
+        //     }
+
+        //     // totalDist = totalDist / 1000;
+        //     // var totalbahan = totalDist.toFixed(1) / 10 * 9500;
+
+        //     DistKM = totalDist / 1000;
+        //     // calc = (DistKM.toFixed(1)/10)*9500;
+        //     var calc;
+	
+        //     var	number_string = bilangan.toString(),
+        //         sisa 	= number_string.length % 3,
+        //         rupiah 	= number_string.substr(0, sisa),
+        //         ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+                    
+        //     if (ribuan) {
+        //         separator = sisa ? '.' : '';
+        //         rupiah += separator + ribuan.join('.');
+        //     }
+
+        //     var bilangan = Math.round(calc);
+
+        //     d = Number(totalTime);
+        //     var h = Math.floor(d / 3600);
+        //     var m = Math.floor(d % 3600 / 60);
+        //     var s = Math.floor(d % 3600 % 60);
+
+        //     var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours ") : "";
+        //     var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes ") : "";
+        //     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+
+        //     if(h>=5){
+        //         calc = (DistKM.toFixed(1)/10)*14000;
+        //     } else {
+        //         calc = (DistKM.toFixed(1)/10)*9500;
+        //     }
+
+        //     document.getElementById("dvDistance").innerHTML = DistKM.toFixed(1) + " Km";
+        //     document.getElementById("dvDuration").innerHTML = hDisplay + mDisplay;
+        //     document.getElementById("dvBahan").innerHTML = "Rp." + rupiah;
+        // }
         function computeTotalDistance(result) {
             var totalDist = 0;
             var totalTime = 0;
             var myroute = result.routes[0];
-            // totalDist = distances.text;
-            // totalTime = duration.text
             console.log(myroute);
             for (i = 0; i < myroute.legs.length; i++) {
                 totalDist += myroute.legs[i].distance.value;
                 totalTime += myroute.legs[i].duration.value;
-                
-            console.log( myroute.legs[i].distance.value);
             }
-
-            // totalDist = totalDist / 1000;
-            // var totalbahan = totalDist.toFixed(1) / 10 * 9500;
-
             DistKM = totalDist / 1000;
-            calc = (DistKM.toFixed(1)/10)*9500;
+            // calc = (DistKM.toFixed(1)/10)*9500;
+            var calc;
+            
+            d = Number(totalTime);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " Jam ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " Menit ") : "";
+            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " Detik") : "";
+            
+            if(h>=5){
+                calc = (DistKM.toFixed(1)/10)*14000;
+            } else {
+                calc = (DistKM.toFixed(1)/10)*9500;
+            }
             var bilangan = Math.round(calc);
 	
             var	number_string = bilangan.toString(),
@@ -380,21 +560,10 @@
                 separator = sisa ? '.' : '';
                 rupiah += separator + ribuan.join('.');
             }
-            
-            d = Number(totalTime);
-            var h = Math.floor(d / 3600);
-            var m = Math.floor(d % 3600 / 60);
-            var s = Math.floor(d % 3600 % 60);
-
-            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours ") : "";
-            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes ") : "";
-            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-
             document.getElementById("dvDistance").innerHTML = DistKM.toFixed(1) + " Km";
             document.getElementById("dvDuration").innerHTML = hDisplay + mDisplay;
-            document.getElementById("dvBahan").innerHTML = "Rp." + rupiah;
+            document.getElementById("dvEst").innerHTML = "Rp. " + rupiah;
         }
-        
     </script>
 @stop
 @section('js')
